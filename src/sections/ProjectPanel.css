@@ -1,0 +1,207 @@
+.panel {
+  position: fixed;
+  inset: 0;
+  z-index: 800;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  background: var(--ink);
+}
+.panel__close {
+  position: fixed;
+  top: 1.2rem;
+  right: var(--gutter);
+  z-index: 5;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.9rem;
+  padding: 0.7rem 1rem;
+  font-size: 0.72rem;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  background: rgba(11, 10, 9, 0.6);
+  border: 1px solid var(--line-strong);
+  backdrop-filter: blur(8px);
+  transition: border-color 0.4s;
+}
+.panel__close:hover {
+  border-color: var(--gold);
+}
+.panel__close-x {
+  position: relative;
+  width: 14px;
+  height: 14px;
+}
+.panel__close-x::before,
+.panel__close-x::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background: var(--gold);
+  transform: rotate(45deg);
+  transition: transform 0.5s var(--ease-out);
+}
+.panel__close-x::after {
+  transform: rotate(-45deg);
+}
+.panel__close:hover .panel__close-x::before {
+  transform: rotate(135deg);
+}
+.panel__close:hover .panel__close-x::after {
+  transform: rotate(45deg);
+}
+
+.panel__cover {
+  position: relative;
+  height: 88vh;
+  height: 88svh;
+  min-height: 460px;
+  overflow: hidden;
+}
+.panel__cover img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.panel__cover-shade {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(11, 10, 9, 0.2) 0%, rgba(11, 10, 9, 0) 40%, rgba(11, 10, 9, 0.95) 100%);
+}
+.panel__head {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: clamp(2rem, 6vh, 4rem);
+  display: grid;
+  gap: 1rem;
+  justify-items: start;
+  margin-inline: auto;
+}
+.panel__title {
+  font-size: clamp(3rem, 2rem + 7vw, 9rem);
+  font-weight: 500;
+}
+.panel__category {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: var(--step-1);
+  color: var(--gold);
+}
+
+.panel__body {
+  display: grid;
+  grid-template-columns: minmax(0, 4fr) minmax(0, 8fr);
+  gap: clamp(2rem, 6vw, 7rem);
+  padding-block: clamp(3rem, 8vh, 6rem);
+}
+.panel__facts {
+  align-self: start;
+  position: sticky;
+  top: 6rem;
+  display: grid;
+  gap: 2rem;
+  justify-items: start;
+}
+.panel__facts dl {
+  margin: 0;
+  width: 100%;
+  border-top: 1px solid var(--line);
+}
+.panel__facts dl > div {
+  padding: 1rem 0;
+  border-bottom: 1px solid var(--line);
+  display: grid;
+  gap: 0.4rem;
+}
+.panel__facts dt {
+  font-family: var(--font-inscription);
+  font-size: 0.7rem;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--gold-dim);
+}
+.panel__facts dd {
+  margin: 0;
+}
+.panel__story {
+  display: grid;
+  gap: clamp(2.5rem, 6vh, 4rem);
+}
+.panel__summary {
+  font-size: var(--step-2);
+  line-height: 1.2;
+  color: var(--bone);
+}
+.panel__block {
+  display: grid;
+  gap: 1rem;
+  color: var(--bone-dim);
+  max-width: 44rem;
+}
+.panel__block .label {
+  color: var(--gold);
+  font-weight: 400;
+}
+.panel__steps {
+  display: grid;
+  gap: 1.6rem;
+  counter-reset: step;
+}
+.panel__steps li {
+  display: grid;
+  grid-template-columns: 3.2rem 1fr;
+  gap: 1rem;
+  padding-top: 1.2rem;
+  border-top: 1px solid var(--line);
+}
+.panel__step-num {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: var(--step-1);
+  color: var(--gold);
+}
+.panel__steps h4 {
+  font-family: var(--font-display);
+  font-size: var(--step-1);
+  font-weight: 500;
+  margin: 0 0 0.3rem;
+  color: var(--bone);
+}
+
+.panel__next {
+  display: grid;
+  gap: 0.6rem;
+  width: 100%;
+  padding: clamp(3rem, 10vh, 7rem) var(--gutter);
+  border-top: 1px solid var(--line);
+  text-align: left;
+  background: radial-gradient(60% 120% at 50% 120%, rgba(200, 164, 92, 0.12), transparent);
+  transition: background-color 0.6s;
+}
+.panel__next-title {
+  display: inline-flex;
+  align-items: center;
+  gap: 1.5rem;
+  font-size: var(--step-4);
+}
+.panel__next-title svg {
+  width: 0.6em;
+  color: var(--gold);
+  transition: transform 0.6s var(--ease-out);
+}
+.panel__next:hover .panel__next-title svg {
+  transform: translateX(0.3em);
+}
+
+@media (max-width: 899px) {
+  .panel__body {
+    grid-template-columns: 1fr;
+  }
+  .panel__facts {
+    position: static;
+    order: 2;
+  }
+}

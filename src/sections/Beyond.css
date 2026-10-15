@@ -1,0 +1,144 @@
+.beyond {
+  --b-bg: #d9cfbb;
+  --b-fg: #15120e;
+  --b-muted: #4f473b;
+  background: var(--b-bg);
+  color: var(--b-fg);
+  overflow: hidden;
+}
+.beyond .section-heading__title {
+  color: var(--b-fg);
+}
+.beyond .kicker {
+  color: color-mix(in srgb, var(--gold-dim) 70%, var(--b-fg));
+}
+
+.beyond__marquee {
+  position: absolute;
+  top: 1.5rem;
+  left: 0;
+  white-space: nowrap;
+  pointer-events: none;
+}
+.beyond__marquee-inner {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: clamp(4rem, 12vw, 11rem);
+  line-height: 1;
+  color: transparent;
+  -webkit-text-stroke: 1px color-mix(in srgb, var(--b-fg) 18%, transparent);
+}
+
+.beyond__quote {
+  margin: 0 0 clamp(4rem, 10vh, 7rem);
+  max-width: 15em;
+  font-size: var(--step-3);
+  font-style: italic;
+  line-height: 1.1;
+}
+
+.beyond__principles {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(1.5rem, 4vw, 4rem);
+  padding-top: 2.5rem;
+  border-top: 1px solid color-mix(in srgb, var(--b-fg) 20%, transparent);
+}
+.beyond__principles li {
+  display: grid;
+  gap: 0.8rem;
+  align-content: start;
+}
+.beyond__numeral {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: var(--step-2);
+  color: var(--gold-dim);
+}
+.beyond__principles h3 {
+  font-size: var(--step-2);
+  font-weight: 500;
+}
+.beyond__principles p,
+.beyond__passion-text p {
+  color: var(--b-muted);
+}
+
+.beyond__passion {
+  display: grid;
+  grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+  gap: clamp(2rem, 6vw, 6rem);
+  align-items: center;
+  margin-top: clamp(5rem, 12vh, 8rem);
+}
+.beyond__passion-text {
+  display: grid;
+  gap: 1.2rem;
+}
+.beyond__passion-text h3 {
+  font-size: var(--step-2);
+  font-weight: 500;
+  line-height: 1.1;
+}
+
+/* Tablette « message au sol » */
+.beyond__tablet {
+  position: relative;
+  display: grid;
+  gap: 1rem;
+  padding: 2rem 2rem 2.4rem;
+  text-align: center;
+  border: 1px solid color-mix(in srgb, var(--b-fg) 22%, transparent);
+  background:
+    radial-gradient(80% 90% at 50% 50%, color-mix(in srgb, var(--gold) 14%, transparent), transparent 70%),
+    color-mix(in srgb, var(--b-fg) 4%, transparent);
+  color: var(--b-fg);
+  overflow: hidden;
+  transition: border-color 0.6s;
+}
+.beyond__tablet:hover,
+.beyond__tablet.is-lingering {
+  border-color: var(--gold-dim);
+}
+.beyond__tablet-label {
+  color: var(--b-muted);
+}
+.beyond__tablet-text {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: var(--step-1);
+  line-height: 1.35;
+  transition: filter 1.6s var(--ease-out), opacity 1.6s;
+}
+.beyond__tablet-text.is-blurred {
+  filter: blur(3.5px);
+  opacity: 0.6;
+}
+.beyond__tablet.is-lingering .beyond__tablet-text {
+  filter: blur(1px);
+  opacity: 0.9;
+}
+.beyond__tablet-progress {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 2px;
+  width: 100%;
+  background: var(--gold);
+  transform: scaleX(0);
+  transform-origin: left;
+}
+.beyond__tablet.is-lingering .beyond__tablet-progress {
+  transform: scaleX(1);
+  transition: transform 1.6s linear;
+}
+.beyond__tablet.is-found {
+  border-color: var(--gold);
+}
+
+@media (max-width: 899px) {
+  .beyond__principles,
+  .beyond__passion {
+    grid-template-columns: 1fr;
+  }
+}

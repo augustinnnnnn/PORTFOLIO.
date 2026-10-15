@@ -1,0 +1,50 @@
+.loader {
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  display: grid;
+  place-items: center;
+  pointer-events: all;
+}
+.loader__panel {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 50.5%;
+  background: var(--ink);
+}
+.loader__panel:first-child {
+  top: 0;
+}
+.loader__panel:nth-child(2) {
+  bottom: 0;
+}
+.loader__inner {
+  position: relative;
+  display: grid;
+  justify-items: center;
+  gap: 1.6rem;
+}
+.loader__sigil {
+  width: 92px;
+  color: var(--gold);
+  filter: drop-shadow(0 0 18px rgba(200, 164, 92, 0.35));
+}
+.loader__text {
+  overflow: hidden;
+  font-family: var(--font-inscription);
+  font-size: 0.8rem;
+  letter-spacing: 0.42em;
+  text-transform: uppercase;
+  color: var(--bone-dim);
+}
+.loader__text > * {
+  display: block;
+}
+.loader__count {
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  color: var(--stone-2);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.2em;
+}
