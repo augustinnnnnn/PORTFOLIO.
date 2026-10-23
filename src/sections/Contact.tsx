@@ -1,103 +1,134 @@
-import { useRef, useState } from 'react'
+import { useEffect, useMemo, useRef } from 'react'
 import { contact } from '../content/site'
+import { projects } from '../content/projects'
 import { useGame } from '../game/GameContext'
-import { Lines } from '../components/Lines'
-import { ArrowGlyph, GraceSigil } from '../components/Glyphs'
-import { EmberField } from '../components/EmberField'
-import { useMagnetic } from '../components/useMagnetic'
-import { gsap, prefersReducedMotion } from '../lib/motion'
+import { Rich } from '../components/Rich'
+import { Rune } from '../components/Glyphs'
+import { Brush, HandArrow } from '../components/Hand'
+import { CopyEmail, Socials } from '../components/Sidebar'
+import { Draggable, ScrollTrigger, gsap, prefersReducedMotion } from '../lib/motion'
+import { revealChars } from '../lib/anim'
 import { scrollToTarget } from '../lib/scroll'
 import './Contact.css'
 
+const COLS = 9
+const ROWS = 6
+/** Position de la tuile secrète (en bas à droite, souvent hors champ). */
+const SECRET = { col: 8, row: 5 }
+
 export function Contact() {
-  const cta = useRef<HTMLAnchorElement>(null)
-  const grace = useRef<HTMLButtonElement>(null)
-  const rest = useRef<HTMLDivElement>(null)
-  const [copied, setCopied] = useState(false)
-  const [resting, setResting] = useState(false)
+  const root = useRef<HTMLElement>(null)
+  const wall = useRef<HTMLDivElement>(null)
   const { discover, isFound, setCodexOpen, reset, progress, total } = useGame()
-  const [confirmReset, setConfirmReset] = useState(false)
-  useMagnetic(cta, 0.25)
-  useMagnetic(grace, 0.15)
+  const found = isFound('last-grace')
 
-  const copy = async () => {
-    try {
-      await navigator.clipboard.writeText(contact.email)
-      setCopied(true)
-      window.setTimeout(() => setCopied(false), 2200)
-    } catch {
-      window.location.href = `mailto:${contact.email}`
-    }
-  }
-
-  // Se reposer à la grâce : court moment de calme + fragment.
-  const onRest = () => {
-    discover('last-grace')
-    if (prefersReducedMotion()) return
-    setResting(true)
-    requestAnimationFrame(() => {
-      gsap
-        .timeline({ onComplete: () => setResting(false) })
-        .fromTo(rest.current, { opacity: 0 }, { opacity: 1, duration: 0.8, ease: 'power2.out' })
-        .from(rest.current!.querySelectorAll('.rest__line'), { scaleX: 0, duration: 1.2, ease: 'expo.out' }, 0.2)
-        .from(rest.current!.querySelector('.rest__text'), { opacity: 0, letterSpacing: '0.9em', duration: 1.6, ease: 'expo.out' }, 0.3)
-        .to(rest.current, { opacity: 0, duration: 0.9, ease: 'power2.in' }, '+=1.1')
+  const tiles = useMemo(() => {
+    const imgs = projects.map((p) => p.coverSmall ?? p.cover)
+    return Array.from({ length: COLS * ROWS }, (_, i) => {
+      const col = i % COLS
+      const row = Math.floor(i / COLS)
+      return { i, col, row, src: imgs[(i * 5 + row) % imgs.length], secret: col === SECRET.col && row === SECRET.row }
     })
-  }
+  }, [])
+
+  useEffect(() => {
+    const el = root.current
+    const w = wall.current
+    if (!el || !w) return
+    const ctx = gsap.context(() => {
+      revealChars(el, '.contact__question')
+      // Le mur prend tout l'écran : la barre latérale s'efface.
+      ScrollTrigger.create({
+        trigger: '.contact__wall',
+        start: 'top 35%',
+        end: 'max',
+        toggleClass: { targets: document.documentElement, className: 'wall-on' },
+      })
+      if (!prefersReducedMotion()) {
+        // Le mur s'assemble en arrivant à l'écran
+        gsap.fromTo(
+          '.contact__tilt',
+          { rotateX: 48, scale: 0.55, yPercent: 18, opacity: 0.2 },
+          { rotateX: 0, scale: 1, yPercent: 0, opacity: 1, ease: 'none', scrollTrigger: { trigger: '.contact__wall', start: 'top bottom', end: 'top top', scrub: 0.6 } },
+        )
+        gsap.from('.contact__tile', {
+          opacity: 0,
+          scale: 0.6,
+          stagger: { each: 0.01, from: 'center', grid: [ROWS, COLS] },
+          ease: 'none',
+          scrollTrigger: { trigger: '.contact__wall', start: 'top 90%', end: 'top 20%', scrub: 0.6 },
+        })
+        gsap.from('.contact__card', { y: 50, opacity: 0, duration: 1, scrollTrigger: { trigger: '.contact__wall', start: 'top 15%', once: true } })
+      }
+    }, el)
+    // Le mur se fait glisser (souris ou doigt)
+    const viewport = w.parentElement!
+    const [drag] = Draggable.create(w, {
+      type: 'x,y',
+      bounds: { minX: -(w.offsetWidth - viewport.offsetWidth) / 2 - 80, maxX: (w.offsetWidth - viewport.offsetWidth) / 2 + 80, minY: -(w.offsetHeight - viewport.offsetHeight) / 2 - 80, maxY: (w.offsetHeight - viewport.offsetHeight) / 2 + 80 },
+      edgeResistance: 0.8,
+      dragClickables: false,
+      allowContextMenu: true,
+      onPress() {
+        w.classList.add('is-dragging')
+      },
+      onRelease() {
+        w.classList.remove('is-dragging')
+      },
+    })
+    return () => {
+      ctx.revert()
+      drag.kill()
+    }
+  }, [])
 
   return (
-    <section id="contact" className="contact" aria-labelledby="contact-title">
-      <EmberField className="contact__embers" density={0.6} />
-      <div className="contact__glow" aria-hidden="true" />
-      <div className="container contact__inner">
-        <button
-          ref={grace}
-          type="button"
-          className={`contact__grace${isFound('last-grace') ? ' is-found' : ''}`}
-          onClick={onRest}
-          aria-label="Se reposer auprès de la lumière"
-          data-cursor="Se reposer"
-        >
-          <span className="contact__flame" aria-hidden="true" />
-          <GraceSigil className="contact__sigil" />
-        </button>
-
-        <p className="kicker contact__kicker" data-reveal="fade">
-          {contact.kicker}
-        </p>
-        <Lines as="h2" id="contact-title" text={contact.title} className="display contact__title" />
-        <p className="contact__lead" data-reveal="fade">
-          {contact.lead}
-        </p>
-
-        <div className="contact__actions" data-reveal="fade">
-          <a ref={cta} className="contact__cta" href={`mailto:${contact.email}`} data-cursor="Écrire">
-            <span>{contact.cta}</span>
-            <ArrowGlyph />
-          </a>
-          <button type="button" className="contact__copy" onClick={copy}>
-            <span className="label">{copied ? 'Adresse copiée' : 'Copier l’adresse'}</span>
-            <span className="contact__email">{contact.email}</span>
-          </button>
-          <span className="sr-only" aria-live="polite">
-            {copied ? 'Adresse e-mail copiée dans le presse-papiers' : ''}
-          </span>
-        </div>
-
-        <ul className="contact__links" data-reveal="stagger">
-          {contact.links.map((l) => (
-            <li key={l.label}>
-              <a href={l.href} target="_blank" rel="noreferrer">
-                <span className="display">{l.label}</span>
-                {l.note && <span className="placeholder-badge">{l.note}</span>}
-                <ArrowGlyph />
-              </a>
-            </li>
-          ))}
-        </ul>
+    <section id="contact" ref={root} className="contact" aria-labelledby="contact-title">
+      <div className="sec sec--aside contact__ask">
+        <Rich as="p" text={contact.question} split className="title poster contact__question" />
       </div>
 
-      <footer className="footer container">
+      <div className="contact__wall">
+        <div className="contact__tilt">
+          <div ref={wall} className="contact__grid" style={{ '--cols': COLS } as React.CSSProperties}>
+            {tiles.map((t) =>
+              t.secret ? (
+                <button
+                  key={t.i}
+                  type="button"
+                  className={`contact__tile contact__tile--secret${found ? ' is-found' : ''}`}
+                  onClick={() => discover('last-grace')}
+                  aria-label={found ? 'Dernière grâce (découverte)' : 'Une tuile brille plus que les autres'}
+                >
+                  <Rune index={7} />
+                </button>
+              ) : (
+                <div key={t.i} className="contact__tile" aria-hidden="true">
+                  <img src={t.src} alt="" loading="lazy" draggable={false} />
+                </div>
+              ),
+            )}
+          </div>
+        </div>
+        <div className="contact__shade" aria-hidden="true" />
+
+        <div className="contact__card">
+          <Rich as="h2" id="contact-title" text={contact.title} className="poster contact__title" />
+          <Brush className="contact__brush" gold />
+          <CopyEmail className="contact__copy" />
+          <p className="micro">{contact.availability}</p>
+          <Socials className="contact__socials" />
+        </div>
+
+        <p className="contact__drag annot" aria-hidden="true">
+          {contact.drag} <HandArrow />
+        </p>
+        <button type="button" className="contact__top annot" onClick={() => scrollToTarget(0)}>
+          {contact.top}
+        </button>
+      </div>
+
+      <footer className="footer">
         <p>
           © {new Date().getFullYear()} — {contact.footer}
         </p>
@@ -105,36 +136,16 @@ export function Contact() {
           <button type="button" onClick={() => setCodexOpen(true)}>
             Codex · {progress.found.length}/{total}
           </button>
-          {confirmReset ? (
-            <button
-              type="button"
-              className="footer__danger"
-              onClick={() => {
-                reset()
-                setConfirmReset(false)
-              }}
-              onBlur={() => setConfirmReset(false)}
-            >
-              Confirmer la réinitialisation
-            </button>
-          ) : (
-            <button type="button" onClick={() => setConfirmReset(true)}>
-              Réinitialiser la progression
-            </button>
-          )}
-          <button type="button" onClick={() => scrollToTarget(0)}>
-            Retour au commencement ↑
+          <button
+            type="button"
+            onClick={() => {
+              if (window.confirm('Effacer toutes les découvertes ?')) reset()
+            }}
+          >
+            Réinitialiser la progression
           </button>
         </div>
       </footer>
-
-      {resting && (
-        <div ref={rest} className="rest" aria-hidden="true">
-          <span className="rest__line" />
-          <p className="rest__text">Lumière retrouvée</p>
-          <span className="rest__line" />
-        </div>
-      )}
     </section>
   )
 }

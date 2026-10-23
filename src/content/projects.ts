@@ -11,6 +11,8 @@
  *      'wide' (large), 'tall' (vertical), 'square' (carré), 'offset' (décalé)
  *  - `link` est optionnel. Laisse-le vide si le projet n'est pas en ligne.
  *  - `process` : les étapes affichées dans le panneau détaillé.
+ *  - `featured: true` : l'œuvre phare, mise en vitrine avec son grand titre
+ *    et sa galerie (`gallery`, 3 à 6 images). Un seul projet à la fois.
  */
 
 export type ProjectLayout = 'wide' | 'tall' | 'square' | 'offset'
@@ -29,6 +31,8 @@ export type Project = {
   link?: { label: string; href: string }
   layout: ProjectLayout
   placeholder?: boolean
+  featured?: boolean
+  gallery?: { src: string; caption: string }[]
   context: string
   process: { title: string; text: string }[]
   result: string
@@ -53,6 +57,14 @@ export const projects: Project[] = [
     tags: ['HTML', 'CSS', 'JavaScript'],
     layout: 'wide',
     placeholder: true,
+    featured: true,
+    gallery: [
+      { src: '/images/relic-peaks.webp', caption: 'Visuel temporaire — page d’accueil' },
+      { src: '/images/relic-colonnade.webp', caption: 'Visuel temporaire — parcours utilisateur' },
+      { src: '/images/relic-gate.webp', caption: 'Visuel temporaire — interactions' },
+      { src: '/images/relic-tree.webp', caption: 'Visuel temporaire — animations' },
+      { src: '/images/relic-tower.webp', caption: 'Visuel temporaire — version mobile' },
+    ],
     context: 'Contexte du projet : cadre (cours, projet personnel, commande), durée, équipe et ton rôle.',
     process: demoProcess,
     result: 'Résultat obtenu, retours reçus et ce que tu as appris. Ajoute un lien si le projet est en ligne.',

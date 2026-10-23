@@ -1,191 +1,121 @@
 import { useEffect, useRef, useState } from 'react'
 import { projects, type Project } from '../content/projects'
+import { worksSection } from '../content/site'
 import { useGame } from '../game/GameContext'
-import { Lines } from '../components/Lines'
-import { ArrowGlyph } from '../components/Glyphs'
-import { gsap, prefersReducedMotion } from '../lib/motion'
-import { scrollToTarget } from '../lib/scroll'
+import { Rich } from '../components/Rich'
+import { Brush, HandArrow } from '../components/Hand'
+import { gsap } from '../lib/motion'
+import { revealChars } from '../lib/anim'
 import { ProjectPanel } from './ProjectPanel'
 import './Works.css'
 
-const roman = ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX', 'X', 'XI', 'XII']
+export type OpenProject = (project: Project, from: HTMLElement | null) => void
 
-export function Works() {
-  const root = useRef<HTMLElement>(null)
-  const track = useRef<HTMLDivElement>(null)
-  const bar = useRef<HTMLSpanElement>(null)
+/** Panneau projet partagé par le carrousel et la vitrine. */
+export function useProjectPanel() {
   const [open, setOpen] = useState<{ project: Project; rect: DOMRect | null; trigger: HTMLElement | null } | null>(null)
-  const [current, setCurrent] = useState(0)
   const { discover } = useGame()
+  const openProject: OpenProject = (project, from) => {
+    const frame = from?.querySelector('img') ?? from
+    setOpen({ project, rect: frame?.getBoundingClientRect() ?? null, trigger: from })
+    discover('relic')
+  }
+  const panel = open && (
+    <ProjectPanel
+      project={open.project}
+      originRect={open.rect}
+      onClose={() => {
+        const t = open.trigger
+        setOpen(null)
+        t?.focus({ preventScroll: true })
+      }}
+      onNavigate={(p) => setOpen({ project: p, rect: null, trigger: open.trigger })}
+    />
+  )
+  return { openProject, panel }
+}
+
+/** Carrousel 3D en arc : les œuvres défilent sur un cylindre au rythme du scroll. */
+export function Works({ onOpen }: { onOpen: OpenProject }) {
+  const root = useRef<HTMLElement>(null)
 
   useEffect(() => {
     const el = root.current
-    const tr = track.current
-    if (!el || !tr) return
-    const reduced = prefersReducedMotion()
+    if (!el) return
     const mm = gsap.matchMedia()
-
-    mm.add('(min-width: 900px)', () => {
-      if (reduced) return
-      const distance = () => tr.scrollWidth - window.innerWidth
-      const horizontal = gsap.to(tr, {
-        x: () => -distance(),
-        ease: 'none',
+    mm.add({ desk: '(min-width: 900px)', reduce: '(prefers-reduced-motion: reduce)' }, (c) => {
+      const { desk, reduce } = c.conditions as { desk: boolean; reduce: boolean }
+      revealChars(el, '.works__title')
+      revealChars(el, '.works__outro', { start: 'top 90%' })
+      if (reduce) return
+      const ring = el.querySelector<HTMLElement>('.works__ring')!
+      const cards = gsap.utils.toArray<HTMLElement>('.wcard', el)
+      const step = desk ? 17 : 26
+      const radius = () => (desk ? window.innerWidth * 0.62 : window.innerWidth * 1.1)
+      // Rotation PUIS recul : chaque carte se pose sur la face intérieure du cylindre.
+      const place = () =>
+        cards.forEach((card, i) => {
+          card.style.transform = `rotateY(${i * step}deg) translateZ(${-radius()}px)`
+        })
+      place()
+      const span = (cards.length - 1) * step
+      gsap.set(ring, { z: radius() })
+      const tl = gsap.timeline({
         scrollTrigger: {
           trigger: el,
-          pin: el.querySelector('.works__pin'),
           start: 'top top',
-          end: () => `+=${distance()}`,
-          scrub: 1,
+          end: desk ? '+=170%' : '+=130%',
+          scrub: 0.8,
+          pin: el.querySelector('.works__pin'),
           invalidateOnRefresh: true,
-          onUpdate: (self) => {
-            if (bar.current) bar.current.style.transform = `scaleX(${self.progress})`
-            setCurrent(Math.min(projects.length - 1, Math.floor(self.progress * projects.length)))
+          onRefresh: () => {
+            place()
+            gsap.set(ring, { z: radius() })
           },
         },
       })
-      tr.querySelectorAll<HTMLElement>('.work').forEach((work) => {
-        const media = work.querySelector('.work__media')
-        const img = work.querySelector('img')
-        gsap.fromTo(
-          media,
-          { clipPath: 'inset(8% 0% 8% 100%)' },
-          {
-            clipPath: 'inset(0% 0% 0% 0%)',
-            ease: 'power2.out',
-            scrollTrigger: { containerAnimation: horizontal, trigger: work, start: 'left 95%', end: 'left 45%', scrub: true },
-          },
-        )
-        gsap.fromTo(
-          img,
-          { xPercent: -10, scale: 1.2 },
-          { xPercent: 10, ease: 'none', scrollTrigger: { containerAnimation: horizontal, trigger: work, start: 'left right', end: 'right left', scrub: true } },
-        )
-        gsap.from(work.querySelectorAll('.work__meta > *'), {
-          y: 30,
-          opacity: 0,
-          stagger: 0.06,
-          duration: 1,
-          scrollTrigger: { containerAnimation: horizontal, trigger: work, start: 'left 70%' },
-        })
-      })
-      gsap.fromTo(
-        tr.querySelectorAll('.work__numeral'),
-        { xPercent: 30 },
-        { xPercent: -30, ease: 'none', scrollTrigger: { trigger: el, start: 'top top', end: () => `+=${distance()}`, scrub: true } },
-      )
+      tl.fromTo(ring, { rotateY: step * 2.2 }, { rotateY: -span - step * 0.6, ease: 'none', duration: 1 }, 0)
+        .from('.works__outro-wrap', { opacity: 0, y: 40, duration: 0.25 }, 0.55)
     })
-
-    mm.add('(max-width: 899px)', () => {
-      if (reduced) return
-      tr.querySelectorAll<HTMLElement>('.work').forEach((work) => {
-        gsap.fromTo(
-          work.querySelector('.work__media'),
-          { clipPath: 'inset(100% 0% 0% 0%)' },
-          { clipPath: 'inset(0% 0% 0% 0%)', duration: 1.4, ease: 'expo.inOut', scrollTrigger: { trigger: work, start: 'top 85%', once: true } },
-        )
-        gsap.from(work.querySelectorAll('.work__meta > *'), { y: 24, opacity: 0, stagger: 0.06, duration: 1, scrollTrigger: { trigger: work, start: 'top 70%', once: true } })
-      })
-    })
-
-    return () => mm.revert()
+    return () => {
+      mm.revert()
+      el.querySelectorAll<HTMLElement>('.wcard').forEach((c) => (c.style.transform = ''))
+    }
   }, [])
 
-  const openProject = (project: Project, trigger: HTMLElement) => {
-    const frame = trigger.querySelector('.work__frame')
-    setOpen({ project, rect: frame?.getBoundingClientRect() ?? null, trigger })
-    discover('relic')
-  }
-
   return (
-    <section id="oeuvres" ref={root} className="works" aria-labelledby="oeuvres-title">
+    <section id="oeuvres" ref={root} className="sec sec--aside works" aria-labelledby="oeuvres-title">
       <div className="works__pin">
-        <div className="works__track" ref={track}>
-          <header className="works__intro">
-            <p className="kicker" data-reveal="fade">
-              III — Œuvres forgées
-            </p>
-            <Lines as="h2" id="oeuvres-title" text={'Les œuvres\nforgées'} className="display works__title" />
-            <p className="works__lead" data-reveal="fade">
-              Chaque projet est une relique : une image, mais surtout une démarche. Ouvre-les pour découvrir comment ils ont été pensés et construits.
-            </p>
-            <p className="works__hint label" aria-hidden="true">
-              Continue de défiler <ArrowGlyph className="works__hint-arrow" />
-            </p>
-          </header>
-
-          {projects.map((p, i) => (
-            <article key={p.id} className={`work work--${p.layout}`} aria-labelledby={`${p.id}-title`}>
-              <span className="work__numeral" aria-hidden="true">
-                {roman[i] ?? i + 1}
-              </span>
-              <button
-                type="button"
-                className="work__media"
-                onClick={(e) => openProject(p, e.currentTarget)}
-                data-cursor="Ouvrir"
-                aria-label={`Ouvrir le projet ${p.title}`}
-              >
-                <span className="work__frame">
-                  <img src={p.cover} srcSet={p.coverSmall ? `${p.coverSmall} 800w, ${p.cover} 1600w` : undefined} sizes="(min-width: 900px) 55vw, 100vw" alt={p.coverAlt} loading="lazy" decoding="async" width={1600} height={1000} />
-                </span>
-                {p.placeholder && <span className="placeholder-badge work__badge">Exemple — à remplacer</span>}
-              </button>
-              <div className="work__meta">
-                <p className="work__chapter label">
-                  Chapitre {roman[i] ?? i + 1} · {p.year}
-                </p>
-                <h3 id={`${p.id}-title`} className="work__title display">
-                  {p.title}
-                </h3>
-                <p className="work__category">{p.category}</p>
-                <p className="work__summary">{p.summary}</p>
-                <ul className="work__tags" aria-label="Technologies">
-                  {p.tags.map((t) => (
-                    <li key={t}>{t}</li>
-                  ))}
-                </ul>
-              </div>
-            </article>
-          ))}
-
-          <aside className="works__end">
-            <p className="display works__end-title">D’autres œuvres sont encore dans la forge.</p>
-            <a
-              href="#contact"
-              className="btn"
-              onClick={(e) => {
-                e.preventDefault()
-                scrollToTarget('#contact')
-              }}
-            >
-              Parlons de la prochaine <ArrowGlyph />
-            </a>
-          </aside>
+        <div className="works__head">
+          <Rich as="h2" id="oeuvres-title" text={worksSection.title} split className="title poster works__title" />
+          <Brush className="works__brush" />
         </div>
 
-        <div className="works__progress" aria-hidden="true">
-          <span className="label">
-            {roman[current]} / {roman[projects.length - 1]}
-          </span>
-          <span className="works__bar">
-            <span ref={bar} />
-          </span>
+        <div className="works__stage">
+          <ul className="works__ring">
+            {projects.map((p, i) => (
+              <li key={p.id} className="wcard">
+                <button type="button" className="wcard__btn" onClick={(e) => onOpen(p, e.currentTarget)} aria-label={`Ouvrir le projet ${p.title}`}>
+                  <img src={p.coverSmall ?? p.cover} alt={p.coverAlt} loading="lazy" />
+                  <span className="wcard__tag poster">
+                    <i /> {p.title} / {String(i + 1).padStart(2, '0')}
+                  </span>
+                  {p.placeholder && <span className="placeholder-badge wcard__badge">Exemple</span>}
+                </button>
+              </li>
+            ))}
+          </ul>
+          <p className="works__note annot" aria-hidden="true">
+            {worksSection.note} <HandArrow />
+          </p>
+        </div>
+
+        <div className="works__outro-wrap">
+          <Rich as="p" text={worksSection.outro} split className="poster works__outro" />
+          <Brush className="works__brush works__brush--small" gold />
+          <p className="micro works__caption">{worksSection.caption}</p>
         </div>
       </div>
-
-      {open && (
-        <ProjectPanel
-          project={open.project}
-          originRect={open.rect}
-          onClose={() => {
-            const t = open.trigger
-            setOpen(null)
-            t?.focus({ preventScroll: true })
-          }}
-          onNavigate={(p) => setOpen({ project: p, rect: null, trigger: open.trigger })}
-        />
-      )}
     </section>
   )
 }

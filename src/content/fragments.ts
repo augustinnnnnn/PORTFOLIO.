@@ -29,28 +29,28 @@ export const fragments: Fragment[] = [
     id: 'hero-rune',
     name: 'Rune de l’aube',
     place: 'Le commencement',
-    hint: 'Quelque chose scintille dans le ciel, au-dessus du nom.',
+    hint: 'Quelque chose scintille dans le cercle de lumière, au-dessus du nom.',
     lore: 'Une marque gravée avant le premier pas. Ceux qui lèvent les yeux trouvent toujours un peu plus que les autres.',
   },
   {
     id: 'threshold',
     name: 'Prière du seuil',
-    place: 'La navigation',
-    hint: 'Le sceau en haut de la page répond à ceux qui patientent.',
+    place: 'Le nom',
+    hint: 'Le nom répond à ceux qui patientent : maintiens-le enfoncé.',
     lore: 'Maintenir plutôt que frapper. Certaines portes ne s’ouvrent qu’à la persévérance.',
   },
   {
     id: 'origin-word',
     name: 'Éclat d’origine',
     place: 'Origine',
-    hint: 'Dans « Qui suis-je ? », un mot n’est pas tout à fait comme les autres.',
+    hint: 'Dans « Origine », un mot n’est pas tout à fait comme les autres.',
     lore: 'Tout commence par l’envie de comprendre ce qu’il y a derrière la prochaine colline.',
   },
   {
     id: 'armory',
     name: 'Mémoire de l’armurier',
     place: 'Arsenal',
-    hint: 'Inspecte chacune des quatre catégories de l’arsenal.',
+    hint: 'Ouvre chacune des quatre catégories de l’arsenal.',
     lore: 'Chaque outil fut d’abord inconnu. On ne forge rien sans connaître son métal.',
   },
   {
@@ -63,14 +63,14 @@ export const fragments: Fragment[] = [
   {
     id: 'path-end',
     name: 'Braise du chemin',
-    place: 'Le chemin parcouru',
-    hint: 'Marche jusqu’au bout du chemin, puis regarde ce qui s’y allume.',
+    place: 'Le chemin',
+    hint: 'Au bout du chemin, sous la vitrine, une braise s’éveille.',
     lore: 'Le chemin ne s’arrête pas ici. La braise attend simplement le prochain pas.',
   },
   {
     id: 'ground-message',
     name: 'Message au sol',
-    place: 'Au-delà de l’écran',
+    place: 'Origine',
     hint: 'Une inscription effacée attend qu’on s’y attarde.',
     lore: 'Laissé par un voyageur inconnu : « Courage, l’essentiel est déjà là. »',
   },
@@ -78,13 +78,13 @@ export const fragments: Fragment[] = [
     id: 'last-grace',
     name: 'Dernière grâce',
     place: 'Contact',
-    hint: 'Repose-toi auprès de la dernière lumière.',
-    lore: 'Un feu qui ne brûle pas. Ici, chaque rencontre commence par un repos.',
+    hint: 'Fais glisser le mur du contact : une tuile brille plus que les autres.',
+    lore: 'Une lumière cachée parmi les œuvres. Ici, chaque rencontre commence par un repos.',
   },
 ]
 
 /** Sections comptées pour l'exploration (ids des <section>). */
-export const exploredSections = ['accueil', 'origine', 'arsenal', 'oeuvres', 'chemin', 'au-dela', 'contact']
+export const exploredSections = ['accueil', 'origine', 'arsenal', 'oeuvres', 'vitrine', 'fragments', 'contact']
 
 export type RankInput = { found: number; total: number; visited: number }
 

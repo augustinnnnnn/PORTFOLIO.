@@ -90,7 +90,7 @@ export function ProjectPanel({ project, originRect, onClose, onNavigate }: Props
   })
 
   return createPortal(
-    <div ref={root} className="panel" role="dialog" aria-modal="true" aria-labelledby="panel-title" data-lenis-prevent>
+    <div ref={root} className="panel" role="dialog" aria-modal="true" aria-labelledby="panel-title">
       <button ref={closeBtn} type="button" className="panel__close" onClick={close}>
         <span>Fermer</span>
         <span className="panel__close-x" aria-hidden="true" />
@@ -99,11 +99,11 @@ export function ProjectPanel({ project, originRect, onClose, onNavigate }: Props
       <div className="panel__cover">
         <img src={project.cover} alt={project.coverAlt} />
         <div className="panel__cover-shade" />
-        <div className="panel__head container">
-          <p className="kicker panel__fade">
+        <div className="panel__head panel__wrap">
+          <p className="micro gold panel__fade">
             Chapitre {index + 1} · {project.year}
           </p>
-          <h2 id="panel-title" className="display panel__title">
+          <h2 id="panel-title" className="poster panel__title">
             <span className="line-mask">
               <span>{project.title}</span>
             </span>
@@ -113,7 +113,7 @@ export function ProjectPanel({ project, originRect, onClose, onNavigate }: Props
         </div>
       </div>
 
-      <div className="panel__body container">
+      <div className="panel__body panel__wrap">
         <aside className="panel__facts panel__fade">
           <dl>
             <div>
@@ -136,20 +136,20 @@ export function ProjectPanel({ project, originRect, onClose, onNavigate }: Props
             </div>
           </dl>
           {project.link?.href && (
-            <a className="btn" href={project.link.href} target="_blank" rel="noreferrer">
+            <a className="boxbtn" href={project.link.href} target="_blank" rel="noreferrer">
               {project.link.label} <ArrowGlyph />
             </a>
           )}
         </aside>
 
         <div className="panel__story">
-          <p className="panel__summary display panel__fade">{project.summary}</p>
+          <p className="panel__summary poster panel__fade">{project.summary}</p>
           <section className="panel__block panel__fade">
-            <h3 className="label">Contexte</h3>
+            <h3 className="micro">Contexte</h3>
             <p>{project.context}</p>
           </section>
           <section className="panel__block panel__fade">
-            <h3 className="label">Démarche</h3>
+            <h3 className="micro">Démarche</h3>
             <ol className="panel__steps">
               {project.process.map((s, i) => (
                 <li key={s.title}>
@@ -163,15 +163,15 @@ export function ProjectPanel({ project, originRect, onClose, onNavigate }: Props
             </ol>
           </section>
           <section className="panel__block panel__fade">
-            <h3 className="label">Résultat</h3>
+            <h3 className="micro">Résultat</h3>
             <p>{project.result}</p>
           </section>
         </div>
       </div>
 
       <button type="button" className="panel__next" onClick={() => onNavigate(next)} data-cursor="Suivant">
-        <span className="label">Œuvre suivante</span>
-        <span className="display panel__next-title">
+        <span className="micro">Œuvre suivante</span>
+        <span className="poster panel__next-title">
           {next.title} <ArrowGlyph />
         </span>
       </button>

@@ -1,0 +1,122 @@
+.chrome {
+  position: fixed;
+  inset: 0;
+  z-index: 1400;
+  pointer-events: none;
+  font-family: var(--font-body);
+}
+.ruler {
+  position: absolute;
+  overflow: hidden;
+  background: rgba(12, 11, 10, 0.9);
+}
+.ruler--top {
+  left: 0;
+  right: 0;
+  top: 0;
+  height: var(--ruler);
+  border-bottom: 1px solid var(--line);
+}
+.ruler--left {
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: var(--ruler);
+  border-right: 1px solid var(--line);
+}
+.ruler__ticks {
+  position: absolute;
+  inset: 0;
+}
+.ruler--top .ruler__ticks {
+  background:
+    repeating-linear-gradient(90deg, rgba(236, 229, 214, 0.35) 0 1px, transparent 1px 100px) 0 0 / 100% 100%,
+    repeating-linear-gradient(90deg, rgba(236, 229, 214, 0.16) 0 1px, transparent 1px 10px) 0 9px / 100% 5px no-repeat;
+}
+.ruler--left .ruler__ticks {
+  background:
+    repeating-linear-gradient(180deg, rgba(236, 229, 214, 0.35) 0 1px, transparent 1px 100px),
+    repeating-linear-gradient(180deg, rgba(236, 229, 214, 0.16) 0 1px, transparent 1px 10px) 9px 0 / 5px 100% no-repeat;
+}
+.ruler__label {
+  position: absolute;
+  font-size: 7px;
+  letter-spacing: 0.04em;
+  color: var(--stone-2);
+}
+.ruler--top .ruler__label {
+  top: 1px;
+  margin-left: 3px;
+}
+.ruler--left .ruler__label {
+  top: 2px;
+  left: 1px;
+  writing-mode: vertical-rl;
+  transform-origin: 0 0;
+}
+.ruler__mark {
+  position: absolute;
+  width: 0;
+  height: 0;
+  border: 5px solid transparent;
+}
+.ruler__mark--top {
+  left: -5px;
+  bottom: 0;
+  border-bottom-color: var(--gold);
+}
+.ruler__mark--left {
+  top: -5px;
+  right: 0;
+  border-right-color: var(--gold);
+}
+.corner {
+  position: absolute;
+  font-size: 1.15rem;
+  font-weight: 300;
+  line-height: 1;
+  color: var(--stone);
+}
+.corner--tl {
+  left: calc(var(--ruler) + 10px);
+  top: calc(var(--ruler) + 6px);
+}
+.corner--tr {
+  right: 12px;
+  top: calc(var(--ruler) + 6px);
+}
+.corner--bl {
+  left: calc(var(--ruler) + 10px);
+  bottom: 10px;
+}
+.corner--br {
+  right: 12px;
+  bottom: 10px;
+}
+.readout {
+  position: absolute;
+  right: 6px;
+  top: 50%;
+  margin: 0;
+  writing-mode: vertical-rl;
+  transform: translateY(-50%) rotate(180deg) rotate(180deg);
+  font-size: 0.62rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--stone);
+  font-variant-numeric: tabular-nums;
+}
+.readout span {
+  margin-right: 0.8em;
+}
+
+@media (max-width: 1099px) {
+  .ruler,
+  .readout {
+    display: none;
+  }
+  .corner--tl,
+  .corner--tr {
+    display: none;
+  }
+}

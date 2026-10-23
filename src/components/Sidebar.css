@@ -1,0 +1,232 @@
+.sidebar {
+  position: fixed;
+  z-index: 1200;
+  top: calc(var(--ruler) + 18px);
+  bottom: 18px;
+  right: calc(var(--gutter) * 0.5 + 14px);
+  width: var(--sidebar-w);
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+  pointer-events: none;
+}
+.sidebar > * {
+  pointer-events: auto;
+}
+.sidebar__name-slot {
+  height: calc(var(--sidebar-w) * 0.2);
+  font-size: calc(var(--sidebar-w) * 0.215);
+}
+.sidebar__brush {
+  margin-top: -0.6rem;
+  width: 82%;
+}
+.sidebar__brush .brush {
+  width: 100%;
+  height: 12px;
+}
+.sidebar__tagline-slot {
+  height: 1.3rem;
+}
+.sidebar__tagline-static {
+  font-size: 1.15rem;
+}
+.sidebar__body {
+  display: grid;
+  gap: 0.9rem;
+  margin-top: 0.6rem;
+}
+.socials {
+  display: flex;
+  gap: 0.6rem;
+}
+.socials a {
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  color: var(--bone);
+  transition: color 0.3s, transform 0.4s var(--ease-out);
+}
+.socials a:hover,
+.socials a:focus-visible {
+  color: var(--gold);
+  transform: translateY(-2px);
+}
+.socials svg {
+  width: 24px;
+  height: 24px;
+}
+.sidebar__role {
+  font-size: 0.8rem;
+  line-height: 1.45;
+  color: var(--bone-dim);
+}
+.sidebar__role span {
+  color: var(--stone);
+}
+.sidebar__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 1rem;
+  font-size: 0.62rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--stone);
+}
+.sidebar__meta span {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+.sidebar__meta svg {
+  width: 13px;
+  height: 13px;
+  color: var(--gold);
+}
+.sidebar__nav {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: end;
+  gap: 0.6rem;
+}
+.navlinks--grid {
+  display: grid;
+  grid-template-columns: repeat(3, auto);
+  gap: 0.35rem 1rem;
+}
+.navlinks--grid a {
+  font-size: 0.98rem;
+}
+.sidebar__nav .badge {
+  font-size: 0.8rem;
+}
+
+.sidebar__media {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  display: flex;
+}
+.sidebar__portrait-slot {
+  position: relative;
+  width: 86%;
+  height: 100%;
+  overflow: hidden;
+  background: var(--char);
+}
+.sidebar__portrait-static {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 36% 50%;
+}
+.sidebar__portrait-label {
+  position: absolute;
+  left: 0.6rem;
+  top: 0.5rem;
+  font-size: 0.85rem;
+  letter-spacing: 0.06em;
+  color: var(--bone);
+  text-shadow: 0 0 8px rgba(0, 0, 0, 0.8);
+}
+.sidebar__vtag {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  writing-mode: vertical-rl;
+  font-size: 0.9rem;
+  letter-spacing: 0.08em;
+  color: var(--gold);
+}
+.sidebar__thumbs {
+  position: absolute;
+  inset: 0 14% 0 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-auto-rows: 1fr;
+  gap: 6px;
+  pointer-events: none;
+}
+.sidebar__thumbs li {
+  overflow: hidden;
+  opacity: 0;
+  transform: translateY(14px) scale(0.96);
+  transition: opacity 0.5s, transform 0.6s var(--ease-out);
+  background: var(--char);
+}
+.sidebar__thumbs img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.sidebar--works .sidebar__thumbs li {
+  opacity: 1;
+  transform: none;
+}
+.sidebar__portrait-slot,
+.flyer--portrait {
+  transition: opacity 0.5s;
+}
+.sidebar--works .sidebar__portrait-slot,
+.sidebar--works ~ .flyers .flyer--portrait {
+  opacity: 0;
+}
+
+/* Copier l'e-mail */
+.copymail {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.6rem;
+  padding: 0.75rem 0.9rem;
+  border: 1px solid var(--line-strong);
+  font-size: 0.85rem;
+  transition: border-color 0.3s;
+}
+.copymail:hover {
+  border-color: var(--gold);
+}
+.copymail__mail {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.copymail__btn {
+  display: grid;
+  place-items: center;
+  color: var(--gold);
+}
+.copymail__btn svg {
+  width: 18px;
+  height: 18px;
+}
+.copymail__copied {
+  position: absolute;
+  right: 0;
+  top: -1.4rem;
+  font-size: 0.65rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--gold);
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.copymail__copied.is-on {
+  opacity: 1;
+}
+
+/* Mode « envol » : les éléments statiques laissent la place aux éléments volants. */
+:root.fly-on .sidebar__name-static,
+:root.fly-on .sidebar__tagline-static,
+:root.fly-on .sidebar__portrait-static,
+:root.fly-on .sidebar__portrait-label {
+  visibility: hidden;
+}
+
+@media (max-width: 1099px) {
+  .sidebar {
+    display: none;
+  }
+}

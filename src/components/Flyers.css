@@ -1,0 +1,39 @@
+.flyers {
+  display: none;
+}
+:root.fly-on .flyers {
+  display: block;
+}
+.flyer {
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 1250;
+  transform-origin: 0 0;
+  will-change: transform;
+}
+.flyer--portrait {
+  overflow: hidden;
+  background: var(--char);
+  will-change: transform, width, height;
+}
+.flyer--portrait img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 36% 50%;
+}
+.flyer__label {
+  position: absolute;
+  left: 0.6rem;
+  top: 0.5rem;
+  font-size: 0.85rem;
+  letter-spacing: 0.06em;
+  text-shadow: 0 0 8px rgba(0, 0, 0, 0.8);
+}
+
+/* Taille du nom dans le hero (partagée avec l'emplacement du hero) */
+.hero-name {
+  font-size: clamp(4.2rem, min(15.5vw, 26vh), 16rem);
+  line-height: 1;
+}

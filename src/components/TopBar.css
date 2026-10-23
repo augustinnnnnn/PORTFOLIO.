@@ -1,0 +1,159 @@
+.topbar {
+  position: fixed;
+  z-index: 1300;
+  top: var(--ruler);
+  left: var(--ruler);
+  right: 0;
+  height: var(--bar-h);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+  padding: 0 calc(var(--gutter) + 0.6rem) 0 calc(var(--gutter) + 0.6rem);
+  pointer-events: none;
+}
+.topbar > * {
+  pointer-events: auto;
+}
+.topbar__left {
+  display: grid;
+  gap: 0.35rem;
+}
+.topbar__tagline {
+  display: inline-block;
+  transform-origin: 0 0;
+  will-change: transform;
+}
+.tagline {
+  font-size: 1.35rem;
+  white-space: nowrap;
+  color: var(--bone);
+}
+.tagline__word {
+  display: inline-block;
+  min-width: 5.5em;
+  color: var(--gold);
+}
+.topbar__nav {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+
+.navlinks {
+  display: flex;
+  gap: clamp(1rem, 2vw, 2.2rem);
+}
+.navlinks a {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.4rem;
+  font-family: var(--font-poster);
+  font-size: 1.2rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--bone);
+  transition: color 0.3s;
+}
+.navlinks__num {
+  font-size: 0.7em;
+  color: var(--stone);
+  transition: color 0.3s;
+}
+.navlinks a:hover,
+.navlinks a.is-active {
+  color: var(--gold);
+}
+.navlinks a:hover .navlinks__num,
+.navlinks a.is-active .navlinks__num {
+  color: var(--gold);
+}
+
+.badge {
+  min-width: 2.6rem;
+  padding: 0.25rem 0.5rem;
+  border: 1px solid var(--line-strong);
+  font-family: var(--font-poster);
+  font-size: 0.95rem;
+  letter-spacing: 0.06em;
+  color: var(--bone);
+  transition: border-color 0.3s, color 0.3s, box-shadow 0.4s;
+}
+.badge:hover,
+.badge:focus-visible {
+  border-color: var(--gold);
+  color: var(--gold);
+  box-shadow: 0 0 18px -4px rgba(217, 169, 79, 0.6);
+}
+
+.topbar__burger {
+  display: none;
+  width: 36px;
+  height: 36px;
+  place-content: center;
+  gap: 6px;
+}
+.topbar__burger i {
+  display: block;
+  width: 24px;
+  height: 2px;
+  background: var(--bone);
+  transition: transform 0.4s var(--ease-out);
+}
+.topbar.is-open .topbar__burger i:first-child {
+  transform: translateY(4px) rotate(45deg);
+}
+.topbar.is-open .topbar__burger i:last-child {
+  transform: translateY(-4px) rotate(-45deg);
+}
+.topbar__menu {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 2rem;
+  padding: var(--bar-h) var(--gutter) 2rem;
+  background: radial-gradient(100% 60% at 50% 100%, rgba(217, 169, 79, 0.14), transparent 70%), var(--ink);
+}
+.topbar__menu[hidden] {
+  display: none;
+}
+.navlinks--big {
+  flex-direction: column;
+  gap: 0.6rem;
+}
+.navlinks--big a {
+  font-size: clamp(2.6rem, 13vw, 4rem);
+  line-height: 1;
+}
+.badge--big {
+  align-self: flex-start;
+  font-size: 1.2rem;
+  padding: 0.4rem 0.8rem;
+}
+
+@media (max-width: 1099px) {
+  .topbar {
+    left: 0;
+    top: 0;
+    padding-inline: var(--gutter);
+    background: linear-gradient(180deg, rgba(12, 11, 10, 0.92), rgba(12, 11, 10, 0));
+  }
+  .topbar__nav,
+  .topbar__index {
+    display: none;
+  }
+  .topbar__burger {
+    display: grid;
+  }
+  .tagline {
+    font-size: 1rem;
+  }
+}
+
+:root.side-static .topbar__nav,
+:root.side-static .topbar__left {
+  display: none;
+}

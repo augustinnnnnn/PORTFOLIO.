@@ -1,0 +1,129 @@
+.frag__head {
+  display: inline-grid;
+}
+.frag__title .line:nth-child(2) {
+  padding-left: 0.4em;
+}
+.frag__brush {
+  justify-self: end;
+  width: 58%;
+  height: 16px;
+}
+.frag__note {
+  justify-self: end;
+  margin-top: 0.4rem;
+}
+.frag__list {
+  margin-top: clamp(2.5rem, 6vh, 4rem);
+  max-width: 760px;
+}
+.frag__list ul {
+  columns: 2;
+  column-gap: 2.5rem;
+  margin-top: 0.8rem;
+}
+.frag__list li {
+  break-inside: avoid;
+  padding: 0.18rem 0;
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--stone-2);
+}
+.frag__list li span {
+  color: var(--stone-2);
+  opacity: 0.8;
+}
+.frag__list li.is-found {
+  color: var(--gold);
+}
+.frag__fan {
+  position: relative;
+  height: clamp(420px, 62vh, 620px);
+  margin-top: 2rem;
+}
+.frag__fan-inner {
+  position: absolute;
+  left: 50%;
+  bottom: 22%;
+  width: 0;
+  height: 0;
+}
+.fcard {
+  position: absolute;
+  left: calc(clamp(150px, 13vw, 200px) / -2);
+  bottom: 0;
+  width: clamp(150px, 13vw, 200px);
+  aspect-ratio: 3 / 4.2;
+  transform-origin: 50% 160%;
+  display: grid;
+  align-content: space-between;
+  padding: 1rem;
+  border: 1px solid var(--line-strong);
+  background:
+    radial-gradient(120% 80% at 50% 0%, rgba(236, 229, 214, 0.06), transparent 60%),
+    linear-gradient(160deg, #24211d, #121110);
+  box-shadow: 0 30px 60px -20px rgba(0, 0, 0, 0.9);
+}
+.fcard.is-found {
+  border-color: rgba(240, 201, 122, 0.7);
+  background:
+    radial-gradient(120% 80% at 50% 0%, rgba(255, 233, 180, 0.5), transparent 60%),
+    linear-gradient(160deg, #c9963f, #6d4b1b);
+  color: var(--ink);
+}
+.fcard__rune {
+  width: 44px;
+  height: 44px;
+  color: var(--stone-2);
+}
+.fcard.is-found .fcard__rune {
+  color: #2a1c08;
+}
+.fcard__name {
+  font-size: 1.3rem;
+  line-height: 1;
+}
+.fcard:not(.is-found) .fcard__name {
+  color: var(--stone);
+}
+.fcard__place {
+  font-size: 0.58rem;
+}
+.fcard.is-found .fcard__place {
+  color: #3d2a0e;
+}
+.fcard__num {
+  position: absolute;
+  right: 0.8rem;
+  top: 0.8rem;
+  font-size: 0.9rem;
+  opacity: 0.7;
+}
+.frag__cta {
+  position: absolute;
+  left: 50%;
+  bottom: 2%;
+  translate: -50% 0;
+  font-size: clamp(1.4rem, 1rem + 1vw, 2rem);
+}
+
+@media (max-width: 899px) {
+  .frag__list ul {
+    columns: 1;
+  }
+  .fcard {
+    width: 120px;
+    left: -60px;
+    transform-origin: 50% 170%;
+  }
+  .frag__fan {
+    height: 380px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fcard {
+    rotate: calc((var(--i) - 3.5) * 11deg);
+  }
+}

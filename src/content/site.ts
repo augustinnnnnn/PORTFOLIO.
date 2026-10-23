@@ -2,106 +2,122 @@
  * ============================================================
  *  CONTENU GÉNÉRAL DU SITE — modifie librement ce fichier.
  * ============================================================
- *  Tous les textes visibles (hors projets, compétences et parcours)
- *  sont centralisés ici. Les éléments marqués « À COMPLÉTER »
- *  doivent être remplacés par tes propres informations.
+ *  Les éléments marqués « À COMPLÉTER » doivent être remplacés
+ *  par tes propres informations.
+ *
+ *  Dans les titres, le texte entre *astérisques* s'affiche en or
+ *  et \n force un retour à la ligne.
  */
 
 export const profile = {
   firstName: 'Augustin',
-  /** Affiché sous le prénom dans le hero. */
-  tagline: 'Web créatif · Design d’interface · Expériences interactives',
-  status: 'Étudiant en BUT MMI',
-  /** Année affichée en chiffres romains dans le hero. */
+  /** Ton nom de famille : il s'affichera en or à côté du prénom (laisse vide pour ne pas l'afficher). */
+  lastName: '',
+  /** Mots qui défilent après « CODE / DESIGN / ». */
+  cycleWords: ['Obscur', 'Mythique', 'Curieux', 'Forgé', 'Vivant'],
+  /** Ligne sous le nom dans la barre latérale. */
+  role: 'Étudiant BUT MMI | Web créatif',
+  stack: 'HTML, CSS, JavaScript, Figma, Motion',
+  location: 'À COMPLÉTER — ta ville',
+  availability: 'Stage / alternance',
   year: 2026,
-}
-
-export const navigation = [
-  { id: 'origine', numeral: 'I', label: 'Origine' },
-  { id: 'arsenal', numeral: 'II', label: 'Arsenal' },
-  { id: 'oeuvres', numeral: 'III', label: 'Œuvres' },
-  { id: 'chemin', numeral: 'IV', label: 'Chemin' },
-  { id: 'au-dela', numeral: 'V', label: 'Au-delà' },
-  { id: 'contact', numeral: 'VI', label: 'Contact' },
-] as const
-
-export const heroOutro = 'Chaque projet est un voyage. Voici le mien.'
-
-/** Section « Qui suis-je ? » */
-export const presentation = {
-  kicker: 'I — Origine',
-  title: 'Qui suis-je ?',
-  /**
-   * Le texte principal se dévoile mot à mot au scroll.
-   * Le mot entouré de [crochets] devient un fragment caché cliquable :
-   * garde exactement un mot entre crochets.
-   */
-  statement:
-    'Je suis Augustin, étudiant en BUT Métiers du Multimédia et de l’Internet. J’aime concevoir des sites qui se vivent plutôt qu’ils ne se lisent : des interfaces claires, des animations qui ont un sens et des univers que l’on prend plaisir à [explorer].',
-  inscription: '« Ce qui est caché n’attend que d’être cherché. »',
-  paragraphs: [
-    'Le BUT MMI m’apprend à passer d’une idée à un produit fini : comprendre un besoin, imaginer une interface, la designer puis la développer.',
-    'Ma manière de travailler : partir de l’intention, construire des maquettes, tester tôt et soigner les détails qui font la différence. Ce portfolio en est le premier exemple.',
-  ],
-  /** Fiche « personnage ». Remplace les valeurs par les tiennes. */
-  attributes: [
-    { label: 'Formation', value: 'BUT MMI' },
-    { label: 'Terrain de jeu', value: 'Web créatif & interfaces' },
-    { label: 'Recherche', value: 'À COMPLÉTER — stage, alternance…' },
-    { label: 'Point de départ', value: 'À COMPLÉTER — ta ville' },
-  ],
   portrait: {
     src: '/images/wanderer.webp',
-    alt: 'Silhouette d’un voyageur au bord d’une falaise, face à une vallée brumeuse',
-    /** Mets `false` quand tu remplaces l’image par ta photo. */
+    alt: 'Visuel temporaire : silhouette d’un voyageur au bord d’une falaise',
+    /** Mets `false` quand tu remplaces l'image par ta photo. */
     placeholder: true,
+    /** Petit texte vertical à côté du portrait. */
+    tag: 'BUT / MMI',
   },
 }
 
-/** Section « Au-delà de l'écran » */
-export const beyond = {
-  kicker: 'V — Au-delà de l’écran',
-  title: 'Ce qui me guide',
-  quote: 'Un bon design ne dit pas tout. Il donne envie de chercher.',
-  principles: [
+export const navigation = [
+  { id: 'origine', label: 'Origine' },
+  { id: 'arsenal', label: 'Arsenal' },
+  { id: 'oeuvres', label: 'Œuvres' },
+  { id: 'fragments', label: 'Fragments' },
+  { id: 'contact', label: 'Contact' },
+] as const
+
+export const hero = {
+  /** Annotation manuscrite au-dessus du nom. */
+  note: 'je forge des sites qui se vivent',
+  /** Invitation à descendre. */
+  scroll: 'continue, voyageur',
+}
+
+/** Section « Origine » (présentation). */
+export const intro = {
+  title: 'D’abord, que ça marche,\n*Ensuite, que ça envoûte…*',
+  /** Sous-titre. Le mot entre [crochets] cache un fragment : garde-en un seul. */
+  subtitle: 'Étudiant en BUT MMI — j’apprends à concevoir, designer et développer des expériences web qu’on a envie d’[explorer].',
+  inscription: '« Ce qui est caché n’attend que d’être cherché. »',
+  /** Chiffres clés : modifie-les librement (évite d'inventer). */
+  stats: [
+    { value: 3, suffix: '', label: 'Années\nBUT MMI' },
+    { value: 8, suffix: '', label: 'Fragments\ncachés ici' },
+    { value: 1, suffix: '', label: 'Obsession\nle détail' },
+  ],
+  vision: [
     {
-      numeral: 'I',
-      title: 'Vision',
-      text: 'Je crois aux interfaces qui respectent l’attention : peu d’éléments, mais chacun à sa place. L’émotion doit servir la compréhension, jamais la remplacer.',
+      title: 'Ma façon de faire',
+      text: 'Comprendre le besoin, esquisser, prototyper, tester, recommencer. Des interfaces claires d’abord, de l’émotion ensuite — jamais l’inverse.',
     },
     {
-      numeral: 'II',
-      title: 'Méthode',
-      text: 'Comprendre, esquisser, prototyper, tester, recommencer. J’avance par itérations courtes et je garde toujours une trace de la démarche.',
-    },
-    {
-      numeral: 'III',
-      title: 'Inspirations',
-      text: 'Le design éditorial, la photographie de paysage, les sites primés pour leur narration… et les jeux vidéo qui racontent sans expliquer.',
+      title: 'Ce que m’a appris FromSoftware',
+      text: 'Elden Ring, Dark Souls et Sekiro m’ont montré qu’un décor peut raconter sans un mot et que la curiosité mérite d’être récompensée. C’est ce que j’essaie d’apporter au web.',
     },
   ],
-  passionTitle: 'Ce que m’ont appris les mondes de FromSoftware',
-  passion:
-    'Elden Ring, Dark Souls et Sekiro m’ont montré qu’un environnement peut raconter une histoire sans un mot, que la curiosité mérite d’être récompensée et que la difficulté bien dosée crée de la satisfaction. J’essaie d’appliquer ces leçons au web : une narration par l’espace, des détails qui se découvrent et une progression qui donne envie d’aller plus loin.',
   groundMessage: {
     hidden: 'Essaie de t’attarder…',
     revealed: 'Merci d’être resté jusqu’ici. La curiosité est déjà une qualité.',
   },
 }
 
+export const skillsSection = {
+  note: 'c’est la partie forge !',
+  hint: 'Clique sur une catégorie pour l’inspecter',
+}
+
+export const worksSection = {
+  title: 'J’en ai forgé. *J’en ai brisé…*',
+  outro: 'Et à chaque fois, *j’ai appris.*',
+  caption: 'Pensé. Codé. Recommencé.',
+  note: 'œuvres',
+}
+
+export const showcaseSection = {
+  /** Phrase sous le grand titre de l'œuvre phare. */
+  claim: 'Celle-ci compte.',
+  claimNote: 'Œuvre phare — remplace-la par ton meilleur projet.',
+  heading: 'Ça m’a pris *du temps.*',
+  enter: 'voir l’œuvre',
+  scroll: 'scroll',
+  showcase: 'vitrine',
+  experienceCta: 'le chemin complet',
+}
+
+export const fragmentsSection = {
+  title: 'Je voulais savoir\n*jusqu’où tu irais…*',
+  note: 'cherche bien',
+  listTitle: 'Fragments de mémoire',
+  cta: 'fragments',
+}
+
 /** Section contact. Tous les liens se modifient ici. */
 export const contact = {
-  kicker: 'VI — La dernière grâce',
-  title: 'Reposons-nous un instant',
-  lead: 'Un projet, un stage, une question ou simplement l’envie d’échanger ? Ma porte est ouverte.',
-  /** ⚠️ À REMPLACER par ton adresse réelle : le bouton « Écrire » l’utilise. */
+  question: 'Alors… on forge\n*quelque chose ensemble ?*',
+  title: '*Écris-moi* avec ton idée',
+  /** ⚠️ À REMPLACER par ton adresse réelle. */
   email: 'ton.adresse@exemple.fr',
-  cta: 'Écrire un message',
+  availability: 'Disponible pour : À COMPLÉTER',
+  drag: 'fais-moi glisser',
+  top: 'retour en haut',
   links: [
-    { label: 'LinkedIn', href: 'https://www.linkedin.com/in/ton-profil', note: 'À COMPLÉTER' },
-    { label: 'GitHub', href: 'https://github.com/augustinnnnnn' },
+    { label: 'LinkedIn', href: 'https://www.linkedin.com/in/ton-profil', icon: 'linkedin' },
+    { label: 'GitHub', href: 'https://github.com/augustinnnnnn', icon: 'github' },
     // Ajoute d'autres liens ici, par exemple :
-    // { label: 'Behance', href: 'https://www.behance.net/ton-profil' },
-  ] as { label: string; href: string; note?: string }[],
+    // { label: 'Behance', href: 'https://www.behance.net/ton-profil', icon: 'link' },
+  ] as { label: string; href: string; icon: 'linkedin' | 'github' | 'link' }[],
   footer: 'Conçu et développé par Augustin.',
 }

@@ -6,24 +6,6 @@ import { scrollToTarget, setScrollLocked } from '../lib/scroll'
 import { useGame } from './GameContext'
 import './GameUI.css'
 
-/** Compteur discret, en bas à gauche : ouvre le codex. */
-export function Hud() {
-  const { progress, total, rankIndex, setCodexOpen, toast } = useGame()
-  const count = progress.found.length
-  return (
-    <button type="button" className={`hud${toast ? ' is-pulsing' : ''}`} onClick={() => setCodexOpen(true)} aria-label={`Codex des fragments : ${count} sur ${total} découverts. Rang : ${ranks[rankIndex].title}`}>
-      <GraceSigil className="hud__sigil" />
-      <span className="hud__text">
-        <span className="hud__count">
-          {count}
-          <span>/{total}</span>
-        </span>
-        <span className="hud__rank">{ranks[rankIndex].title}</span>
-      </span>
-    </button>
-  )
-}
-
 /** Bannière de découverte, à la manière d'un objet ramassé. */
 export function FragmentToast() {
   const { toast, progress, total } = useGame()
@@ -105,8 +87,8 @@ export function Codex() {
       <div className="codex__sheet">
         <header className="codex__head">
           <div>
-            <p className="kicker">Codex</p>
-            <h2 id="codex-title" className="display">
+            <p className="micro gold">Codex</p>
+            <h2 id="codex-title" className="poster">
               Fragments de mémoire
             </h2>
           </div>
@@ -165,14 +147,14 @@ export function Codex() {
 
         <footer className="codex__foot">
           {found === total && (
-            <button type="button" className="btn" onClick={() => { close(); replayFinale() }}>
+            <button type="button" className="boxbtn" onClick={() => { close(); replayFinale() }}>
               Revoir l’épilogue
             </button>
           )}
           {confirm ? (
             <div className="codex__confirm">
               <p>Effacer toutes les découvertes ?</p>
-              <button type="button" className="btn" onClick={() => { reset(); setConfirm(false) }}>
+              <button type="button" className="boxbtn" onClick={() => { reset(); setConfirm(false) }}>
                 Oui, tout effacer
               </button>
               <button type="button" className="codex__link" onClick={() => setConfirm(false)}>
@@ -222,8 +204,8 @@ export function Finale() {
   return (
     <div ref={root} className="finale" role="dialog" aria-modal="true" aria-labelledby="finale-title">
       <GraceSigil className="finale__sigil" />
-      <p className="kicker finale__reveal">Accomplissement</p>
-      <h2 id="finale-title" className="display finale__title finale__reveal">
+      <p className="micro gold finale__reveal">Accomplissement</p>
+      <h2 id="finale-title" className="poster finale__title finale__reveal">
         Mémoire restaurée
       </h2>
       <p className="finale__text finale__reveal">
@@ -233,7 +215,7 @@ export function Finale() {
       <div className="finale__actions finale__reveal">
         <button
           type="button"
-          className="btn"
+          className="boxbtn"
           onClick={() => {
             closeFinale()
             window.setTimeout(() => scrollToTarget('#contact'), 300)

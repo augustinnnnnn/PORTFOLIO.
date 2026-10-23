@@ -1,0 +1,70 @@
+.namemark {
+  display: inline-block;
+  --hold: 0;
+  margin: 0;
+  line-height: 0.86;
+  white-space: nowrap;
+}
+.namemark__btn {
+  display: inline-flex;
+  gap: 0.22em;
+  font: inherit;
+  letter-spacing: inherit;
+  text-transform: inherit;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  cursor: default;
+}
+.namemark__first {
+  background: linear-gradient(90deg, var(--gold) calc(var(--hold) * 100%), var(--bone) calc(var(--hold) * 100%));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 0 40px rgba(236, 229, 214, 0.12);
+}
+.namemark.is-blessed .namemark__first,
+:root[data-restored] .namemark__first {
+  background: linear-gradient(180deg, #ffe3a6, var(--gold));
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+.namemark__last {
+  color: var(--gold);
+  text-shadow: 0 0 40px rgba(217, 169, 79, 0.25);
+}
+
+/* Glitch : de rares secousses colorées */
+.glitch {
+  position: relative;
+  display: inline-block;
+}
+.glitch::before,
+.glitch::after {
+  content: attr(data-text);
+  position: absolute;
+  inset: 0;
+  -webkit-text-fill-color: currentColor;
+  pointer-events: none;
+  opacity: 0;
+}
+.glitch::before {
+  color: var(--gold);
+  animation: glitch-a 7s steps(1) infinite;
+}
+.glitch::after {
+  color: var(--ember);
+  animation: glitch-b 7s steps(1) infinite 0.08s;
+}
+@keyframes glitch-a {
+  0%, 91%, 100% { opacity: 0; transform: none; clip-path: inset(0 0 0 0); }
+  92% { opacity: 0.9; transform: translate(-3px, 1px); clip-path: inset(10% 0 62% 0); }
+  94% { opacity: 0.9; transform: translate(4px, -1px); clip-path: inset(55% 0 20% 0); }
+  96% { opacity: 0; }
+}
+@keyframes glitch-b {
+  0%, 92%, 100% { opacity: 0; transform: none; }
+  93% { opacity: 0.6; transform: translate(3px, 0); clip-path: inset(40% 0 35% 0); }
+  95% { opacity: 0.6; transform: translate(-2px, 2px); clip-path: inset(75% 0 5% 0); }
+  97% { opacity: 0; }
+}

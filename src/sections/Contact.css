@@ -1,230 +1,169 @@
 .contact {
   position: relative;
-  overflow: hidden;
-  padding-top: clamp(7rem, 16vh, 12rem);
-  background:
-    radial-gradient(70% 55% at 50% 22%, rgba(200, 164, 92, 0.14), transparent 70%),
-    var(--ink);
 }
-.contact__embers {
+.contact__ask {
+  padding-bottom: clamp(3rem, 8vh, 5rem);
+}
+.contact__question .line:nth-child(2) {
+  padding-left: 0.5em;
+}
+
+.contact__wall {
+  position: relative;
+  user-select: none;
+  -webkit-user-select: none;
+  height: 100vh;
+  height: 100svh;
+  overflow: hidden;
+  perspective: 1400px;
+  background: var(--ink);
+}
+.contact__tilt {
   position: absolute;
   inset: 0;
+  display: grid;
+  place-items: center;
+  transform-origin: 50% 0%;
+}
+.contact__grid {
+  display: grid;
+  grid-template-columns: repeat(var(--cols), clamp(150px, 15vw, 230px));
+  gap: 12px;
+  cursor: grab;
+  touch-action: none;
+}
+.contact__grid.is-dragging {
+  cursor: grabbing;
+}
+.contact__tile {
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  background: var(--char);
+  border: 1px solid var(--line);
+}
+.contact__tile img {
   width: 100%;
   height: 100%;
+  object-fit: cover;
+  filter: saturate(0.7) brightness(0.65);
+  user-select: none;
   pointer-events: none;
-  opacity: 0.8;
 }
-.contact__glow {
+.contact__tile--secret {
+  display: grid;
+  place-items: center;
+  color: var(--gold-bright);
+  background: radial-gradient(circle, rgba(217, 169, 79, 0.35), #15110b 70%);
+  border-color: rgba(217, 169, 79, 0.6);
+  animation: secret-pulse 3s ease-in-out infinite;
+}
+.contact__tile--secret svg {
+  width: 40%;
+  height: 40%;
+  filter: drop-shadow(0 0 10px rgba(240, 201, 122, 0.9));
+}
+.contact__tile--secret.is-found {
+  animation: none;
+  box-shadow: 0 0 40px rgba(240, 201, 122, 0.5);
+}
+@keyframes secret-pulse {
+  50% {
+    box-shadow: 0 0 40px rgba(240, 201, 122, 0.45);
+  }
+}
+.contact__shade {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(42% 40% at 50% 50%, rgba(12, 11, 10, 0.92), rgba(12, 11, 10, 0.4) 70%, rgba(12, 11, 10, 0.75));
+}
+.contact__card {
   position: absolute;
   left: 50%;
-  top: 10%;
-  width: 60vmax;
-  height: 60vmax;
-  translate: -50% -30%;
-  background: radial-gradient(circle, rgba(230, 199, 132, 0.12), transparent 60%);
+  top: 50%;
+  translate: -50% -50%;
+  width: min(92vw, 560px);
+  display: grid;
+  justify-items: center;
+  gap: 1rem;
+  text-align: center;
   pointer-events: none;
 }
-.contact__inner {
-  position: relative;
-  display: grid;
-  justify-items: center;
-  text-align: center;
-  gap: 1.6rem;
+.contact__card > * {
+  pointer-events: auto;
 }
-
-/* La grâce : un sceau avec une flamme dorée */
-.contact__grace {
-  position: relative;
-  width: 120px;
-  height: 120px;
-  margin-bottom: 1.5rem;
-  color: var(--gold);
-  transition: color 0.6s;
+.contact__card .copymail {
+  user-select: text;
 }
-.contact__sigil {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  animation: halo-spin 60s linear infinite;
-}
-.contact__flame {
-  position: absolute;
-  inset: 22%;
-  border-radius: 50%;
-  background: radial-gradient(circle at 50% 60%, #fff3d0 0%, #e6c784 28%, rgba(200, 140, 60, 0.4) 55%, transparent 72%);
-  filter: blur(6px);
-  animation: flame 3.2s ease-in-out infinite;
-}
-.contact__grace:hover .contact__flame,
-.contact__grace:focus-visible .contact__flame {
-  inset: 10%;
-}
-.contact__grace.is-found {
-  color: var(--gold-bright);
-  filter: drop-shadow(0 0 20px rgba(230, 199, 132, 0.6));
-}
-@keyframes flame {
-  0%,
-  100% {
-    transform: scale(1) translateY(0);
-    opacity: 0.9;
-  }
-  50% {
-    transform: scale(1.12, 1.2) translateY(-4%);
-    opacity: 1;
-  }
-}
-
 .contact__title {
-  font-size: var(--step-4);
-  max-width: 12em;
+  font-size: clamp(2rem, 1.2rem + 3vw, 3.8rem);
+  line-height: 1;
 }
-.contact__lead {
-  max-width: 34rem;
-  color: var(--stone);
-  font-size: var(--step-1);
-  font-family: var(--font-display);
-  font-style: italic;
-}
-
-.contact__actions {
-  display: grid;
-  justify-items: center;
-  gap: 1.6rem;
-  margin-top: 2rem;
-}
-.contact__cta {
-  position: relative;
-  display: inline-flex;
-  align-items: center;
-  gap: 1.2rem;
-  padding: 1.5rem 2.6rem;
-  border-radius: 999px;
-  background: var(--gold);
-  color: var(--ink);
-  font-size: 0.86rem;
-  font-weight: 600;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  box-shadow: 0 0 0 0 rgba(230, 199, 132, 0.4);
-  transition: background 0.5s, box-shadow 0.6s var(--ease-out);
-}
-.contact__cta svg {
-  width: 1.3rem;
-  transition: transform 0.5s var(--ease-out);
-}
-.contact__cta:hover,
-.contact__cta:focus-visible {
-  background: var(--gold-bright);
-  box-shadow: 0 0 0 12px rgba(230, 199, 132, 0.12), 0 0 60px rgba(230, 199, 132, 0.35);
-}
-.contact__cta:hover svg {
-  transform: translateX(6px);
+.contact__brush {
+  width: 50%;
+  height: 14px;
+  margin-top: -0.4rem;
 }
 .contact__copy {
-  display: grid;
-  gap: 0.3rem;
-  justify-items: center;
+  min-width: min(100%, 340px);
+  background: rgba(12, 11, 10, 0.75);
 }
-.contact__email {
-  font-family: var(--font-display);
-  font-size: var(--step-2);
-  color: var(--bone);
-  border-bottom: 1px solid var(--line-strong);
-  transition: border-color 0.4s, color 0.4s;
-  word-break: break-all;
+.contact__socials {
+  justify-content: center;
 }
-.contact__copy:hover .contact__email {
-  color: var(--gold-bright);
-  border-color: var(--gold);
+.contact__drag {
+  position: absolute;
+  left: calc(var(--gutter) + var(--ruler));
+  bottom: 1.6rem;
+  pointer-events: none;
 }
-
-.contact__links {
-  width: 100%;
-  max-width: 900px;
-  margin-top: clamp(3rem, 8vh, 5rem);
-  border-top: 1px solid var(--line);
+.contact__top {
+  position: absolute;
+  right: calc(var(--gutter) + 1rem);
+  bottom: 1.6rem;
+  transition: color 0.3s;
 }
-.contact__links a {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  padding: 1.4rem 0.4rem;
-  border-bottom: 1px solid var(--line);
-  transition: padding 0.6s var(--ease-out), background 0.6s;
-}
-.contact__links a .display {
-  flex: 1;
-  text-align: left;
-  font-size: var(--step-2);
-}
-.contact__links a svg {
-  width: 1.6rem;
+.contact__top:hover {
   color: var(--gold);
-  transition: transform 0.6s var(--ease-out);
 }
-.contact__links a:hover,
-.contact__links a:focus-visible {
-  padding-inline: 1.4rem;
-  background: linear-gradient(90deg, rgba(200, 164, 92, 0.1), transparent);
-}
-.contact__links a:hover svg {
-  transform: rotate(-45deg);
-}
-
 .footer {
-  position: relative;
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
-  gap: 1.2rem;
-  margin-top: clamp(5rem, 12vh, 8rem);
-  padding-block: 2rem;
+  gap: 1rem;
+  padding: 1.6rem var(--gutter) 1.6rem calc(var(--gutter) + var(--ruler));
   border-top: 1px solid var(--line);
-  font-size: var(--step--1);
+  font-size: 0.78rem;
   color: var(--stone);
 }
 .footer__actions {
   display: flex;
   flex-wrap: wrap;
-  gap: 1.6rem;
+  gap: 1.4rem;
 }
 .footer__actions button {
-  font-size: var(--step--1);
   color: var(--bone-dim);
   border-bottom: 1px solid transparent;
-  transition: color 0.3s, border-color 0.3s;
 }
 .footer__actions button:hover {
-  color: var(--gold-bright);
+  color: var(--gold);
   border-color: currentColor;
 }
-.footer__actions .footer__danger {
-  color: #e07a5f;
+@media (max-width: 1099px) {
+  .contact__grid {
+    grid-template-columns: repeat(var(--cols), 120px);
+    gap: 8px;
+  }
 }
 
-/* Moment de repos */
-.rest {
-  position: fixed;
-  inset: 0;
-  z-index: 950;
-  display: grid;
-  place-content: center;
-  justify-items: center;
-  gap: 1.4rem;
-  background: radial-gradient(60% 50% at 50% 50%, rgba(60, 44, 20, 0.92), rgba(11, 10, 9, 0.97));
+.sidebar,
+.flyers,
+.topbar__tagline {
+  transition: opacity 0.6s var(--ease-out);
+}
+:root.wall-on .sidebar,
+:root.wall-on .flyers,
+:root.wall-on.fly-on .topbar__tagline {
+  opacity: 0;
   pointer-events: none;
-}
-.rest__line {
-  width: min(60vw, 520px);
-  height: 1px;
-  background: linear-gradient(90deg, transparent, var(--gold-bright), transparent);
-}
-.rest__text {
-  font-family: var(--font-inscription);
-  font-size: clamp(1rem, 0.8rem + 1.2vw, 1.8rem);
-  letter-spacing: 0.5em;
-  text-transform: uppercase;
-  color: var(--gold-bright);
-  text-shadow: 0 0 30px rgba(230, 199, 132, 0.6);
 }

@@ -23,28 +23,27 @@
   position: relative;
   display: grid;
   justify-items: center;
-  gap: 1.6rem;
+  gap: 1.2rem;
 }
 .loader__sigil {
-  width: 92px;
+  width: 70px;
   color: var(--gold);
-  filter: drop-shadow(0 0 18px rgba(200, 164, 92, 0.35));
+  filter: drop-shadow(0 0 18px rgba(217, 169, 79, 0.4));
 }
 .loader__text {
   overflow: hidden;
-  font-family: var(--font-inscription);
-  font-size: 0.8rem;
-  letter-spacing: 0.42em;
+  font-family: var(--font-hand);
+  font-size: 1.1rem;
   text-transform: uppercase;
-  color: var(--bone-dim);
+  color: var(--bone);
 }
 .loader__text > * {
   display: block;
 }
 .loader__count {
-  font-family: var(--font-display);
-  font-size: 0.95rem;
-  color: var(--stone-2);
+  font-family: var(--font-poster);
+  font-size: clamp(4rem, 12vw, 9rem);
+  line-height: 0.9;
+  color: var(--gold);
   font-variant-numeric: tabular-nums;
-  letter-spacing: 0.2em;
 }

@@ -1,338 +1,192 @@
 .hero {
   position: relative;
-  background: var(--ink);
-}
-.hero__pin {
-  position: relative;
   height: 100vh;
   height: 100svh;
-  min-height: 560px;
+  min-height: 600px;
   overflow: hidden;
+  padding: calc(var(--ruler) + var(--bar-h)) var(--gutter) clamp(2rem, 6vh, 3.5rem) calc(var(--gutter) + var(--ruler));
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
 }
 
-.hero__scene,
-.hero__layer,
-.hero__mouse {
+/* Orbe de lumière : la grande porte vue à travers une trame de points */
+.hero__orb {
   position: absolute;
-  inset: 0;
-}
-.hero__scene {
-  will-change: transform, opacity;
-}
-.hero__layer {
-  will-change: transform;
-}
-.hero__mouse {
-  inset: -3%;
-}
-.hero__layer svg {
-  width: 100%;
-  height: 100%;
-}
-
-.hero__sky {
-  background:
-    radial-gradient(90% 70% at 50% 72%, rgba(162, 128, 74, 0.38), transparent 70%),
-    linear-gradient(180deg, #070706 0%, #13110e 38%, #3a3124 70%, #1a1612 100%);
-}
-
-/* Le grand sceau céleste, derrière le nom */
-.hero__halo-inner {
-  position: absolute;
-  left: 50%;
-  top: 28%;
-  width: min(72vh, 78vw);
+  left: 18%;
+  top: 9%;
+  width: min(28vw, 46vh);
   aspect-ratio: 1;
-  transform-origin: 50% 50%;
-  translate: -50% -50%;
 }
-.hero__halo-glow {
-  position: absolute;
-  inset: -30%;
-  background: radial-gradient(circle, rgba(230, 199, 132, 0.36) 0%, rgba(200, 164, 92, 0.12) 32%, transparent 62%);
-}
-.hero__halo-sigil {
+.hero__orb-inner {
   position: absolute;
   inset: 0;
-  width: 100%;
-  height: 100%;
-  color: rgba(230, 199, 132, 0.32);
-  overflow: visible;
-  animation: halo-spin 180s linear infinite;
-}
-@keyframes halo-spin {
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-.hero__light-glow {
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(28% 38% at 50% 62%, rgba(246, 218, 160, 0.55), rgba(200, 150, 70, 0.18) 45%, transparent 75%);
-}
-.hero__light {
-  opacity: 0.85;
-}
-
-.hero__ray {
-  mix-blend-mode: screen;
-  animation: ray-breathe 7s ease-in-out infinite;
-}
-@keyframes ray-breathe {
-  50% {
-    opacity: 0.25;
-  }
-}
-
-/* Brume : deux bandes floues qui dérivent lentement */
-.hero__fog {
-  opacity: 0.6;
-  pointer-events: none;
-}
-.hero__fog-band {
-  position: absolute;
-  left: -30%;
-  width: 160%;
-  height: 34%;
   border-radius: 50%;
-  filter: blur(40px);
-  background: radial-gradient(50% 50% at 50% 50%, rgba(170, 150, 120, 0.42), transparent 70%);
+  overflow: hidden;
+  background: radial-gradient(circle at 50% 55%, #6b4b1f, #1b130a 70%);
+  box-shadow: 0 0 120px 10px rgba(217, 169, 79, 0.18);
 }
-.hero__fog-band--a {
-  bottom: 12%;
-  animation: fog-drift 38s ease-in-out infinite alternate;
-}
-.hero__fog-band--b {
-  bottom: -6%;
-  height: 40%;
-  opacity: 0.8;
-  background: radial-gradient(50% 50% at 50% 50%, rgba(120, 104, 84, 0.5), transparent 70%);
-  animation: fog-drift 52s ease-in-out infinite alternate-reverse;
-}
-@keyframes fog-drift {
-  from {
-    transform: translateX(-8%);
-  }
-  to {
-    transform: translateX(8%);
-  }
-}
-
-.hero__embers {
+.hero__orb-inner img {
   width: 100%;
   height: 100%;
-  pointer-events: none;
+  object-fit: cover;
+  filter: blur(2px) sepia(0.6) saturate(1.3) brightness(0.85);
+  opacity: 0.8;
+  transform: scale(1.25);
 }
-
-.hero__flash {
-  opacity: 0;
-  background: radial-gradient(60% 60% at 50% 60%, #fff3d6, #e3b86a 55%, #7b5323);
-  pointer-events: none;
-}
-
-/* ---------- Titre ---------- */
-.hero__title-wrap {
+.hero__orb-inner::after {
+  content: '';
   position: absolute;
-  left: 0;
-  right: 0;
-  top: max(calc(var(--nav-h) + 3vh), 15%);
-  display: grid;
-  justify-items: center;
-  text-align: center;
-  padding-inline: var(--gutter);
+  inset: 0;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle, rgba(12, 11, 10, 0.9) 0.9px, transparent 1.4px) 0 0 / 5px 5px,
+    radial-gradient(circle at 50% 50%, transparent 40%, rgba(12, 11, 10, 0.85) 72%);
   pointer-events: none;
 }
-.hero__title {
-  display: flex;
-  justify-content: center;
-  font-family: var(--font-display);
-  font-weight: 500;
-  font-size: clamp(3.6rem, 15.5vw, 15.5rem);
-  line-height: 0.82;
-  letter-spacing: 0.02em;
-  color: var(--bone);
-  text-shadow: 0 0 60px rgba(11, 10, 9, 0.5);
-  margin: 0.15em 0 0.12em;
-}
-.hero__char-mask {
-  display: inline-block;
-  overflow: hidden;
-  padding: 0.06em 0.005em 0.04em;
-}
-.hero__char {
-  display: inline-block;
-  will-change: transform;
-  background: linear-gradient(180deg, #f3ede1 30%, #c9bda5 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-:root[data-restored] .hero__char {
-  background: linear-gradient(180deg, #f8e7be 20%, #c8a45c 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-}
-.hero__title-meta {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  font-family: var(--font-inscription);
-  font-size: var(--step--1);
-  letter-spacing: 0.4em;
-  text-transform: uppercase;
-  color: var(--gold);
-}
-.hero__dash {
-  width: 3rem;
-  height: 1px;
-  background: currentColor;
-  opacity: 0.6;
-}
-.hero__tagline {
-  font-family: var(--font-body);
-  letter-spacing: 0.26em;
-  font-size: clamp(0.62rem, 0.55rem + 0.3vw, 0.8rem);
-  color: var(--bone-dim);
-  text-wrap: balance;
-  justify-content: center;
-}
-
-/* ---------- Rune cachée ---------- */
 .hero__rune {
   position: absolute;
-  top: 16%;
-  right: 11%;
+  z-index: 1;
+  left: 50%;
+  top: 34%;
   width: 34px;
   height: 34px;
+  translate: -50% 0;
   color: var(--gold-bright);
-  opacity: 0.22;
-  transition: opacity 0.6s, filter 0.6s, transform 0.6s var(--ease-out);
-  animation: rune-pulse 5s ease-in-out infinite;
+  opacity: 0.35;
+  animation: rune-pulse 4.5s ease-in-out infinite;
+  transition: opacity 0.5s, filter 0.5s, transform 0.5s var(--ease-out);
 }
 .hero__rune svg {
   width: 100%;
   height: 100%;
 }
 .hero__rune:hover,
-.hero__rune:focus-visible {
-  opacity: 1;
-  filter: drop-shadow(0 0 10px rgba(230, 199, 132, 0.9));
-  transform: scale(1.15);
-}
+.hero__rune:focus-visible,
 .hero__rune.is-found {
-  opacity: 0.8;
+  opacity: 1;
+  filter: drop-shadow(0 0 10px rgba(240, 201, 122, 0.9));
+  transform: scale(1.15);
   animation: none;
-  filter: drop-shadow(0 0 8px rgba(230, 199, 132, 0.7));
-}
-.hero__rune-burst {
-  position: absolute;
-  inset: 0;
-  border: 1px solid var(--gold-bright);
-  border-radius: 50%;
-  opacity: 0;
-  pointer-events: none;
 }
 @keyframes rune-pulse {
   50% {
-    opacity: 0.36;
+    opacity: 0.6;
   }
 }
 
-/* ---------- Bas du hero ---------- */
+/* Scène : annotation, nom, portrait, bas */
+.hero__stage {
+  position: relative;
+  display: grid;
+  gap: 0.6rem;
+}
+.hero__note {
+  display: inline-flex;
+  align-items: flex-end;
+  gap: 0.5rem;
+  justify-self: end;
+  margin-right: calc(min(12vw, 170px) + 2vw);
+  font-size: clamp(1rem, 0.7rem + 0.9vw, 1.5rem);
+}
+.hero__note-arrow {
+  width: 1.4em;
+  height: 1.4em;
+  color: var(--gold);
+}
+.hero__row {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 2vw;
+}
+.hero__name {
+  margin-bottom: 0.08em;
+}
+.hero__portrait {
+  margin: 0;
+  width: min(12vw, 170px);
+  aspect-ratio: 3 / 4;
+  overflow: hidden;
+  flex: none;
+  background: var(--char);
+}
+.hero__portrait img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 36% 50%;
+}
+:root.fly-on .hero__name,
+:root.fly-on .hero__portrait {
+  visibility: hidden;
+}
 .hero__bottom {
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
   display: grid;
-  grid-template-columns: 1fr auto 1fr;
-  align-items: end;
-  gap: 1rem;
-  padding: 0 var(--gutter) clamp(1.2rem, 3.5vh, 2.4rem);
-}
-.hero__status {
-  display: grid;
-  gap: 0.3rem;
-  font-size: var(--step--1);
-  color: var(--bone-dim);
-}
-.hero__status--right {
-  justify-items: end;
-  text-align: right;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 1.5rem;
+  margin-top: 1.4rem;
 }
 .hero__scroll {
-  display: grid;
-  justify-items: center;
-  gap: 0.8rem;
+  font-size: clamp(1rem, 0.8rem + 0.6vw, 1.4rem);
+  white-space: nowrap;
+  transition: color 0.3s;
 }
-.hero__scroll-line {
-  position: relative;
-  width: 1px;
-  height: 64px;
-  background: var(--line-strong);
-  overflow: hidden;
+.hero__scroll:hover {
+  color: var(--gold);
 }
-.hero__scroll-line i {
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 1px;
-  height: 40%;
-  background: var(--gold-bright);
-  animation: scroll-cue 2.2s var(--ease-in-out) infinite;
+.hero__brush {
+  width: 100%;
+  max-width: 900px;
+  height: 18px;
 }
-@keyframes scroll-cue {
-  from {
-    transform: translateY(-100%);
-  }
-  to {
-    transform: translateY(260%);
-  }
+.hero__socials a {
+  width: 26px;
+  height: 26px;
+}
+.hero__socials svg {
+  width: 20px;
+  height: 20px;
 }
 
-/* ---------- Voile de sortie ---------- */
-.hero__veil {
-  position: absolute;
-  inset: 0;
-  display: grid;
-  place-items: center;
-  padding: var(--gutter);
-  background: var(--ink);
-  opacity: 0;
-  pointer-events: none;
-}
-.hero__outro {
-  max-width: 16em;
-  text-wrap: balance;
-  text-align: center;
-  font-size: var(--step-3);
-  font-style: italic;
-  color: var(--bone);
-}
-
-@media (max-width: 899px) {
-  .hero__title-wrap {
-    top: calc(var(--nav-h) + 6vh);
+@media (max-width: 1099px) {
+  .hero {
+    padding-top: var(--bar-h);
   }
-  .hero__halo-inner {
-    top: 30%;
+  .hero__orb {
+    left: 50%;
+    top: 14%;
+    width: min(76vw, 52vh);
+    translate: -50% 0;
   }
-  .hero__rune {
-    top: 13%;
-    right: 8%;
+  .hero__note {
+    justify-self: start;
+    margin-right: 0;
+  }
+  .hero__row {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .hero__portrait {
+    display: none;
   }
   .hero__bottom {
-    grid-template-columns: 1fr;
-    justify-items: center;
+    grid-template-columns: 1fr auto;
   }
-  .hero__status {
-    display: none;
+  .hero__brush {
+    grid-column: 1 / -1;
+    grid-row: 1;
   }
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .hero__veil {
-    display: none;
-  }
+/* Ordinateur + animations réduites : la barre latérale est fixe dès le départ */
+:root.side-static .hero {
+  padding-right: calc(var(--sidebar-w) + var(--gutter) * 1.6 + 14px);
+}
+:root.side-static .hero__portrait {
+  display: none;
+}
+:root.side-static .hero__note {
+  margin-right: 0;
 }
