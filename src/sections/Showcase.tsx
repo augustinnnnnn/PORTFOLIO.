@@ -86,7 +86,7 @@ export function Showcase({ onOpen }: { onOpen: OpenProject }) {
       <div className="show__word-wrap">
         <HandArrow className="show__word-arrow" />
         <h2 id="vitrine-title" className="show__word poster" aria-label={featured.title}>
-          {[...featured.title.toUpperCase()].map((c, i) => (
+          {[...(featured.shortTitle ?? featured.title).toUpperCase()].map((c, i) => (
             <span className="ch" key={i} aria-hidden="true">
               {c === ' ' ? ' ' : c}
             </span>
@@ -95,18 +95,18 @@ export function Showcase({ onOpen }: { onOpen: OpenProject }) {
         <Brush className="show__brush" />
       </div>
       <div className="show__claim">
-        <p className="poster">{showcaseSection.claim}</p>
-        <p className="micro">{showcaseSection.claimNote}</p>
+        <p className="poster">{featured.showcase?.claim ?? showcaseSection.claim}</p>
+        <p className="micro">{featured.showcase?.note ?? showcaseSection.claimNote}</p>
       </div>
       <div className="show__facts">
         <dl>
           <div>
-            <dt className="micro gold">Année</dt>
-            <dd>{featured.year}</dd>
+            <dt className="micro gold">{featured.duration ? 'Durée' : 'Année'}</dt>
+            <dd>{featured.duration ?? featured.year}</dd>
           </div>
           <div>
-            <dt className="micro gold">Type</dt>
-            <dd>{featured.category}</dd>
+            <dt className="micro gold">{featured.role ? 'Rôle' : 'Type'}</dt>
+            <dd>{featured.role ?? featured.category}</dd>
           </div>
           <div>
             <dt className="micro gold">Outils</dt>

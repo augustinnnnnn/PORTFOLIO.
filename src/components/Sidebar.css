@@ -14,12 +14,11 @@
   pointer-events: auto;
 }
 .sidebar__name-slot {
-  height: calc(var(--sidebar-w) * 0.2);
-  font-size: calc(var(--sidebar-w) * 0.215);
+  font-size: calc(var(--sidebar-w) * 0.124);
 }
 .sidebar__brush {
-  margin-top: -0.6rem;
-  width: 82%;
+  margin-top: -0.7rem;
+  width: 100%;
 }
 .sidebar__brush .brush {
   width: 100%;

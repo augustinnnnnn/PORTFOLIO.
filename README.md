@@ -31,7 +31,7 @@ Tout le texte est dans `src/content/`. Les éléments marqués **À COMPLÉTER**
 3. Mets `placeholder: false` (ou supprime la ligne) : le badge « Exemple » disparaît.
 4. Pour en faire le projet phare : `featured: true` et une `gallery` de 3 à 6 images (et retire `featured` de l'ancien).
 
-Les six projets actuels sont **des exemples** : remplace-les ou supprime-les.
+Le premier projet, **Ferme de la Buissière** (stage de 2e année), est réel et sert de projet phare. Ses planches de présentation sont dans `public/images/projets/buissiere/` : elles ont été composées à partir du rapport de stage et du diaporama de soutenance, avec les coordonnées de la ferme floutées ou recadrées. Les cinq autres projets sont **des exemples** : remplace-les ou supprime-les.
 
 ### Contact
 

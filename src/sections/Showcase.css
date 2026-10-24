@@ -9,7 +9,7 @@
 .show__word-wrap {
   position: relative;
   display: inline-grid;
-  margin-top: 1rem;
+  margin-top: 2rem;
   padding-left: clamp(0rem, 6vw, 6rem);
 }
 .show__word-arrow {

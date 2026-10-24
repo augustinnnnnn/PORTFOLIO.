@@ -116,10 +116,22 @@ export function ProjectPanel({ project, originRect, onClose, onNavigate }: Props
       <div className="panel__body panel__wrap">
         <aside className="panel__facts panel__fade">
           <dl>
+            {project.client && (
+              <div>
+                <dt>Client</dt>
+                <dd>{project.client}</dd>
+              </div>
+            )}
             <div>
-              <dt>Année</dt>
-              <dd>{project.year}</dd>
+              <dt>{project.duration ? 'Durée' : 'Année'}</dt>
+              <dd>{project.duration ?? project.year}</dd>
             </div>
+            {project.role && (
+              <div>
+                <dt>Rôle</dt>
+                <dd>{project.role}</dd>
+              </div>
+            )}
             <div>
               <dt>Type</dt>
               <dd>{project.category}</dd>
@@ -162,12 +174,56 @@ export function ProjectPanel({ project, originRect, onClose, onNavigate }: Props
               ))}
             </ol>
           </section>
+          {project.challenges && (
+            <section className="panel__block panel__fade">
+              <h3 className="micro">Difficultés &amp; solutions</h3>
+              <ul className="panel__challenges">
+                {project.challenges.map((c) => (
+                  <li key={c.problem}>
+                    <span className="panel__problem">{c.problem}</span>
+                    <span className="panel__arrow" aria-hidden="true">→</span>
+                    <span>{c.solution}</span>
+                  </li>
+                ))}
+              </ul>
+            </section>
+          )}
           <section className="panel__block panel__fade">
             <h3 className="micro">Résultat</h3>
             <p>{project.result}</p>
+            {project.learnings && (
+              <p>
+                <strong>Ce que j’en retiens : </strong>
+                {project.learnings}
+              </p>
+            )}
           </section>
+          {project.improvements && (
+            <section className="panel__block panel__fade">
+              <h3 className="micro">Avec le recul, j’améliorerais</h3>
+              <ul className="panel__list">
+                {project.improvements.map((t) => (
+                  <li key={t}>{t}</li>
+                ))}
+              </ul>
+            </section>
+          )}
         </div>
       </div>
+
+      {project.images && (
+        <section className="panel__gallery panel__wrap" aria-label="Galerie du projet">
+          <h3 className="micro">Galerie</h3>
+          {project.images.map((im, i) => (
+            <figure key={im.src + i} className={i % 3 === 0 ? 'is-wide' : undefined}>
+              <img src={im.src} alt={im.caption} loading="lazy" decoding="async" width={1600} height={1000} />
+              <figcaption className="micro">
+                <span className="gold">{String(i + 1).padStart(2, '0')}</span> {im.caption}
+              </figcaption>
+            </figure>
+          ))}
+        </section>
+      )}
 
       <button type="button" className="panel__next" onClick={() => onNavigate(next)} data-cursor="Suivant">
         <span className="micro">Projet suivant</span>

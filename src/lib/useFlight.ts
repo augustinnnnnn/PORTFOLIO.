@@ -1,12 +1,21 @@
 import { useEffect } from 'react'
 import { DESKTOP_QUERY, gsap } from './motion'
 
-/** Position d'un élément du contenu défilant, comme si la page était tout en haut. */
-function restRect(el: Element) {
-  const content = document.getElementById('smooth-content')
-  const r = el.getBoundingClientRect()
-  const c = content?.getBoundingClientRect()
-  return { x: r.left, y: c ? r.top - c.top : r.top + window.scrollY, w: r.width, h: r.height }
+/**
+ * Position d'un élément du contenu défilant, comme si la page était tout en haut.
+ * Calculée à partir de la mise en page (offsetTop…) : les transformations
+ * d'animation (entrées, décalages) n'influencent pas la mesure.
+ */
+function restRect(el: HTMLElement) {
+  let x = 0
+  let y = 0
+  let e: HTMLElement | null = el
+  while (e) {
+    x += e.offsetLeft
+    y += e.offsetTop
+    e = e.offsetParent as HTMLElement | null
+  }
+  return { x, y, w: el.offsetWidth, h: el.offsetHeight }
 }
 const fixedRect = (el: Element) => {
   const r = el.getBoundingClientRect()

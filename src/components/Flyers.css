@@ -33,7 +33,17 @@
 }
 
 /* Taille du nom dans le hero (partagée avec l'emplacement du hero) */
+.hero-name.namemark,
 .hero-name {
-  font-size: clamp(4.2rem, min(15.5vw, 26vh), 16rem);
+  /* « AUGUSTIN POULARD » : ~7,5 em de large */
+  font-size: clamp(3rem, min(9.4vw, 19vh), 10.5rem);
   line-height: 1;
+}
+@media (max-width: 1099px) {
+  .hero-name.namemark,
+  .hero-name {
+    font-size: clamp(3.2rem, 16vw, 7rem);
+    flex-wrap: wrap;
+    line-height: 0.92;
+  }
 }

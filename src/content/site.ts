@@ -12,12 +12,12 @@
 export const profile = {
   firstName: 'Augustin',
   /** Ton nom de famille : il s'affichera en or à côté du prénom (laisse vide pour ne pas l'afficher). */
-  lastName: '',
+  lastName: 'Poulard',
   /** Mots qui défilent après « CODE / DESIGN / ». */
   cycleWords: ['Motion', 'Interface', 'Créatif', 'Précis'],
   /** Ligne sous le nom dans la barre latérale. */
   role: 'Étudiant BUT MMI | Web créatif',
-  stack: 'HTML, CSS, JavaScript, Figma, Motion',
+  stack: 'Illustrator, Canva, Figma, WordPress',
   location: 'À COMPLÉTER — ta ville',
   availability: 'Stage / alternance',
   year: 2026,
@@ -61,7 +61,7 @@ export const intro = {
   stats: [
     { value: 3, label: 'Années\nBUT MMI' },
     { value: 4, label: 'Domaines\nde compétences' },
-    { value: 6, label: 'Projets\nprésentés' },
+    { value: 11, label: 'Semaines\nde stage' },
   ],
 }
 
@@ -80,7 +80,7 @@ export const worksSection = {
 export const showcaseSection = {
   /** Phrase sous le grand titre du projet phare. */
   claim: 'Projet phare.',
-  claimNote: 'Remplace-le par ton meilleur projet.',
+  claimNote: 'Projet mis en avant.',
   heading: 'Ça m’a pris *du temps.*',
   enter: 'voir le projet',
   scroll: 'scroll',

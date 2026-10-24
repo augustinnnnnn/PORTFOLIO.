@@ -43,6 +43,12 @@ export const skillCategories: SkillCategory[] = [
         uses: ['Interactions', 'Consommation d’API', 'Logique front-end'],
       },
       {
+        name: 'WordPress',
+        glyph: 'Wp',
+        description: 'Monter un site de A à Z : installation en local (XAMPP, phpMyAdmin), thème Astra, pages construites avec Elementor, extensions comme Safe SVG.',
+        uses: ['Site de la Ferme de la Buissière', 'Elementor', 'Astra'],
+      },
+      {
         name: 'React',
         glyph: 'Re',
         description: 'Découper une interface en composants réutilisables et gérer son état. À valider selon ton niveau réel.',
@@ -62,10 +68,10 @@ export const skillCategories: SkillCategory[] = [
     summary: 'Ce qui protège la cohérence d’un projet, du pixel au système.',
     skills: [
       {
-        name: 'Direction artistique',
-        glyph: 'Da',
-        description: 'Définir une ambiance : palette, typographie, images et rythme visuel au service d’un message.',
-        uses: ['Moodboards', 'Identité visuelle'],
+        name: 'Charte graphique',
+        glyph: 'Cg',
+        description: 'Construire l’identité d’une marque à partir d’un moodboard : palette, typographies et règles d’usage, appliquées ensuite à tous les supports.',
+        uses: ['Charte Ferme de la Buissière : 7 teintes, 3 polices', 'Moodboard'],
       },
       {
         name: 'Typographie',
@@ -90,7 +96,13 @@ export const skillCategories: SkillCategory[] = [
         name: 'Figma',
         glyph: 'Fg',
         description: 'Wireframes, maquettes haute fidélité, composants et prototypes interactifs.',
-        uses: ['Maquettes', 'Prototypes', 'Composants'],
+        uses: ['Wireframes de 3 pages (stage)', 'Moodboard', 'Maquettes'],
+      },
+      {
+        name: 'Gestion de projet',
+        glyph: 'Gp',
+        description: 'Planifier et suivre un projet : tableau de bord Excel, planning hebdomadaire, livrables et validations régulières avec le client.',
+        uses: ['Excel', 'Suivi des livrables', 'Points client'],
       },
       {
         name: 'Recherche utilisateur',
@@ -112,10 +124,22 @@ export const skillCategories: SkillCategory[] = [
     summary: 'Image, son et mouvement pour raconter autrement.',
     skills: [
       {
-        name: 'Photoshop & Illustrator',
+        name: 'Illustrator',
+        glyph: 'Ai',
+        description: 'Dessiner un logo en vectoriel, utilisable à toutes les tailles, et le décliner selon les fonds et les supports.',
+        uses: ['Logo de la Ferme de la Buissière', 'Déclinaisons'],
+      },
+      {
+        name: 'Canva',
+        glyph: 'Cv',
+        description: 'Mettre en page des supports imprimés en respectant une charte, tout en les laissant modifiables par le client.',
+        uses: ['Dépliant triptyque', 'Supports print'],
+      },
+      {
+        name: 'Photoshop',
         glyph: 'Ps',
-        description: 'Retouche, composition et création d’illustrations ou d’éléments vectoriels.',
-        uses: ['Retouche', 'Visuels', 'Logos'],
+        description: 'Retouche et composition d’images : un axe que je veux approfondir en 3e année.',
+        uses: ['Retouche', 'Visuels'],
       },
       {
         name: 'Motion design',
