@@ -2,10 +2,8 @@ import { useEffect, useRef, useState } from 'react'
 import { projects } from '../content/projects'
 import { journey } from '../content/journey'
 import { showcaseSection } from '../content/site'
-import { useGame } from '../game/GameContext'
 import { Rich } from '../components/Rich'
 import { Brush, HandArrow, Scribble } from '../components/Hand'
-import { Rune } from '../components/Glyphs'
 import { gsap, ScrollTrigger, prefersReducedMotion } from '../lib/motion'
 import { revealChars, revealUp } from '../lib/anim'
 import type { OpenProject } from './Works'
@@ -18,9 +16,6 @@ export function Showcase({ onOpen }: { onOpen: OpenProject }) {
   const root = useRef<HTMLElement>(null)
   const [slide, setSlide] = useState(0)
   const [full, setFull] = useState(false)
-  const [awake, setAwake] = useState(false)
-  const { discover, isFound } = useGame()
-  const emberFound = isFound('path-end')
 
   // Le parcours déplié change la hauteur de la page.
   useEffect(() => {
@@ -34,7 +29,6 @@ export function Showcase({ onOpen }: { onOpen: OpenProject }) {
     const ctx = gsap.context(() => {
       revealChars(el, '.show__heading')
       revealUp(el, '.show__claim, .show__facts, .show__exp')
-      ScrollTrigger.create({ trigger: '.show__exp', start: 'top 75%', once: true, onEnter: () => setAwake(true) })
       if (reduce) return
 
       // 1. Le grand mot s'assemble lettre par lettre
@@ -86,7 +80,7 @@ export function Showcase({ onOpen }: { onOpen: OpenProject }) {
   return (
     <section id="vitrine" ref={root} className="sec sec--aside show" aria-labelledby="vitrine-title">
       <p className="show__eyebrow">
-        <span className="micro">Œuvre phare / {featured.year}</span>
+        <span className="micro">Projet phare / {featured.year}</span>
         <span className="hand gold"> → {featured.category}</span>
       </p>
       <div className="show__word-wrap">
@@ -172,15 +166,6 @@ export function Showcase({ onOpen }: { onOpen: OpenProject }) {
         <div className="show__exp-side">
           <button type="button" className="scribble hand" aria-expanded={full} onClick={() => setFull((f) => !f)}>
             <Scribble>{full ? 'replier' : showcaseSection.experienceCta} ↗</Scribble>
-          </button>
-          <button
-            type="button"
-            className={`show__ember${awake ? ' is-awake' : ''}${emberFound ? ' is-found' : ''}`}
-            disabled={!awake}
-            onClick={() => discover('path-end')}
-            aria-label={emberFound ? 'Braise du chemin (découverte)' : 'Une braise s’éveille au bout du chemin'}
-          >
-            <Rune index={5} />
           </button>
         </div>
       </div>

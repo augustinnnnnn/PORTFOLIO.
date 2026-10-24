@@ -25,7 +25,9 @@
 }
 .title .line {
   overflow: hidden;
-  padding-bottom: 0.06em;
+  /* marge haute pour ne pas rogner les accents des majuscules (É, À…) */
+  padding: 0.16em 0 0.06em;
+  margin-top: -0.16em;
 }
 .annot {
   display: inline-flex;

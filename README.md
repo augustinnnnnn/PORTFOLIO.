@@ -1,6 +1,6 @@
 # Portfolio — Augustin
 
-Portfolio en une page, construit sur la structure et le rythme de défilement de [danielkiss.hu](https://danielkiss.hu) (repéré sur Awwwards), réinterprété dans un univers sombre et doré inspiré des jeux FromSoftware. Le code, les textes et les visuels sont originaux.
+Portfolio en une page, construit sur la structure, l'intro et le rythme de défilement de [danielkiss.hu](https://danielkiss.hu) (repéré sur Awwwards), dans une direction artistique sombre et dorée. Le code, les textes et les visuels sont originaux.
 
 **Stack** : Vite · React 18 · TypeScript · GSAP (ScrollTrigger, ScrollSmoother, Draggable). Polices : Anton (titres), Permanent Marker (annotations manuscrites), Inter Tight (texte).
 
@@ -19,18 +19,17 @@ Tout le texte est dans `src/content/`. Les éléments marqués **À COMPLÉTER**
 
 | Fichier | Contenu |
 | --- | --- |
-| `src/content/site.ts` | Prénom (et nom, affiché en or s'il est rempli), mots qui défilent, portrait, textes de chaque section, **e-mail et liens de contact** |
-| `src/content/projects.ts` | **Les projets** (titre, image, description, outils, année, lien, démarche) et l'**œuvre phare** (`featured: true` + `gallery`) |
+| `src/content/site.ts` | Prénom (et nom, affiché en or s'il est rempli), mots qui défilent, portrait, images de l'intro, textes de chaque section, principes de la section Approche, **e-mail et liens de contact** |
+| `src/content/projects.ts` | **Les projets** (titre, image, description, outils, année, lien, démarche) et le **projet phare** (`featured: true` + `gallery`) |
 | `src/content/skills.ts` | L'arsenal : catégories et compétences |
-| `src/content/journey.ts` | Le parcours (grille sous la vitrine) |
-| `src/content/fragments.ts` | Gamification : noms, indices et textes des fragments, paliers |
+| `src/content/journey.ts` | Le parcours (grille sous le projet phare) |
 
 ### Ajouter un projet
 
 1. Place l'image de couverture dans `public/images/projets/` (`.webp` conseillé, environ 1600 × 1000 px, moins de 250 Ko ; une version de 800 px de large va dans `coverSmall`).
 2. Dans `src/content/projects.ts`, copie un bloc existant et remplace les valeurs.
 3. Mets `placeholder: false` (ou supprime la ligne) : le badge « Exemple » disparaît.
-4. Pour en faire l'œuvre phare : `featured: true` et une `gallery` de 3 à 6 images (et retire `featured` de l'ancien).
+4. Pour en faire le projet phare : `featured: true` et une `gallery` de 3 à 6 images (et retire `featured` de l'ancien).
 
 Les six projets actuels sont **des exemples** : remplace-les ou supprime-les.
 
@@ -50,43 +49,30 @@ Les visuels de `public/images/` sont **temporaires** : créations procédurales 
 
 ## Le parcours de la page
 
-1. **Hero** — nom géant, orbe de lumière tramé, portrait, annotation manuscrite. Au scroll, le nom, le slogan et le portrait **s'envolent dans la barre latérale fixe** (ordinateur).
-2. **Barre latérale** — nom, slogan à mots changeants, liens, navigation numérotée, portrait (remplacé par les vignettes des œuvres dans la section Œuvres), e-mail à copier.
-3. **Cadre** — règles graduées en haut et à gauche, repères du curseur, télémétrie verticale (x, y, progression, section).
-4. **Origine** — grand titre bicolore, chiffres clés qui comptent, vision, « message au sol ».
-5. **Arsenal** — catégories numérotées qui s'allument lettre par lettre ; un clic déplie le détail.
-6. **Œuvres** — carrousel 3D en arc piloté par le scroll (section épinglée) ; chaque carte ouvre le panneau projet.
-7. **Vitrine** — le titre de l'œuvre phare s'assemble lettre par lettre, puis galerie épinglée « 01 / 05 » et parcours.
-8. **Fragments** — l'éventail de cartes et la liste des fragments trouvés (à la place des récompenses de la référence).
-9. **Contact** — mur de vignettes qui s'assemble, à faire glisser, avec la carte de contact au centre.
-
-### Gamification (8 fragments, sauvegardés en `localStorage`, aucune donnée personnelle)
-
-1. une rune dans l'orbe de lumière du hero ;
-2. maintenir le nom enfoncé (souris, toucher ou clavier) ;
-3. un mot cliquable dans « Origine » ;
-4. le « message au sol », à survoler longuement ;
-5. ouvrir les 4 catégories de l'arsenal ;
-6. ouvrir une œuvre ;
-7. la braise au bout du parcours ;
-8. une tuile lumineuse cachée dans le mur du contact.
-
-Le compteur `0/8` (navigation) ouvre le **Codex** : collection, indices, paliers *Sans-lueur → Voyageur → Porteur de fragments → Gardien des mémoires*, réinitialisation. Quand tout est trouvé : écran final et nom doré.
+1. **Intro** — le nom s'écrit en haut à gauche, des visuels s'empilent en haut à droite, un compteur 000 → 100 avance sur une règle graduée ; à 100, le rideau remonte et dévoile la page.
+2. **Hero** — nom géant, orbe tramé, portrait, annotation manuscrite. Au scroll, le nom, le slogan et le portrait **s'envolent dans la barre latérale fixe** (ordinateur).
+3. **Barre latérale** — nom, slogan à mots changeants, liens, navigation numérotée, portrait (remplacé par les vignettes des projets dans la section Projets), e-mail à copier.
+4. **Cadre** — règles graduées en haut et à gauche, repères du curseur, télémétrie verticale (x, y, progression, section).
+5. **Profil** — grand titre bicolore et chiffres clés qui comptent.
+6. **Compétences** — catégories numérotées qui s'allument lettre par lettre ; un clic déplie le détail.
+7. **Projets** — carrousel 3D en arc piloté par le scroll ; chaque carte ouvre le panneau projet.
+8. **Projet phare** — le titre s'assemble lettre par lettre, puis galerie épinglée « 01 / 05 » et parcours.
+9. **Approche** — mes principes de travail, en éventail de cartes.
+10. **Contact** — mur de vignettes qui s'assemble, à faire glisser, avec la carte de contact au centre.
 
 ### Accessibilité et performance
 
-- `prefers-reduced-motion` : pas de défilement amorti, d'envol ni d'épinglage ; la barre latérale est affichée d'emblée et tout le contenu est visible.
+- `prefers-reduced-motion` : intro écourtée, pas de défilement amorti, d'envol ni d'épinglage ; la barre latérale est affichée d'emblée et tout le contenu est visible.
 - Écran tactile : défilement natif ; sous 1100 px, mise en page mobile (menu plein écran, sans barre latérale).
-- Navigation au clavier (lien d'évitement, focus géré dans le panneau projet et le codex), images WebP chargées en différé.
+- Navigation au clavier (lien d'évitement, focus géré dans le panneau projet), images WebP chargées en différé.
 
 ## Structure
 
 ```
 src/
   content/     ← textes et données (à modifier)
-  sections/    ← Hero, Intro, Skills, Works, Showcase, Fragments, Contact, ProjectPanel
-  components/  ← Chrome (cadre), TopBar, Sidebar, Flyers, NameMark, Hand (pinceau, flèches), Rich…
-  game/        ← GameContext (état, sauvegarde) + GameUI (notification, codex, écran final)
+  sections/    ← Hero, Intro, Skills, Works, Showcase, Approach, Contact, ProjectPanel
+  components/  ← Loader (intro), Chrome (cadre), TopBar, Sidebar, Flyers, NameMark, Hand (pinceau, flèches), Rich…
   lib/         ← GSAP, défilement amorti, envol (useFlight), animations
   styles/      ← tokens (palette, typographies), base, mise en page
 ```

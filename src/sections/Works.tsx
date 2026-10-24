@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { projects, type Project } from '../content/projects'
 import { worksSection } from '../content/site'
-import { useGame } from '../game/GameContext'
 import { Rich } from '../components/Rich'
 import { Brush, HandArrow } from '../components/Hand'
 import { gsap } from '../lib/motion'
@@ -14,11 +13,9 @@ export type OpenProject = (project: Project, from: HTMLElement | null) => void
 /** Panneau projet partagé par le carrousel et la vitrine. */
 export function useProjectPanel() {
   const [open, setOpen] = useState<{ project: Project; rect: DOMRect | null; trigger: HTMLElement | null } | null>(null)
-  const { discover } = useGame()
   const openProject: OpenProject = (project, from) => {
     const frame = from?.querySelector('img') ?? from
     setOpen({ project, rect: frame?.getBoundingClientRect() ?? null, trigger: from })
-    discover('relic')
   }
   const panel = open && (
     <ProjectPanel
@@ -35,7 +32,7 @@ export function useProjectPanel() {
   return { openProject, panel }
 }
 
-/** Carrousel 3D en arc : les œuvres défilent sur un cylindre au rythme du scroll. */
+/** Carrousel 3D en arc : les projets défilent sur un cylindre au rythme du scroll. */
 export function Works({ onOpen }: { onOpen: OpenProject }) {
   const root = useRef<HTMLElement>(null)
 
@@ -84,10 +81,10 @@ export function Works({ onOpen }: { onOpen: OpenProject }) {
   }, [])
 
   return (
-    <section id="oeuvres" ref={root} className="sec sec--aside works" aria-labelledby="oeuvres-title">
+    <section id="projets" ref={root} className="sec sec--aside works" aria-labelledby="projets-title">
       <div className="works__pin">
         <div className="works__head">
-          <Rich as="h2" id="oeuvres-title" text={worksSection.title} split className="title poster works__title" />
+          <Rich as="h2" id="projets-title" text={worksSection.title} split className="title poster works__title" />
           <Brush className="works__brush" />
         </div>
 

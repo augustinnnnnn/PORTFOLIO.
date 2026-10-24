@@ -1,7 +1,6 @@
 import { Fragment, useEffect, useRef, useState } from 'react'
 import { skillCategories } from '../content/skills'
 import { skillsSection } from '../content/site'
-import { useGame } from '../game/GameContext'
 import { HandArrow } from '../components/Hand'
 import { ScrollTrigger, gsap, prefersReducedMotion } from '../lib/motion'
 import './Skills.css'
@@ -9,7 +8,6 @@ import './Skills.css'
 export function Skills() {
   const root = useRef<HTMLElement>(null)
   const [open, setOpen] = useState<string | null>(null)
-  const { inspectCategory, progress } = useGame()
 
   // Chaque catégorie s'allume lettre par lettre en traversant l'écran.
   useEffect(() => {
@@ -45,25 +43,20 @@ export function Skills() {
     gsap.from(panel.querySelectorAll('li'), { y: 20, opacity: 0, stagger: 0.05, duration: 0.6, delay: 0.1 })
   }, [open])
 
-  const toggle = (id: string) => {
-    setOpen((o) => (o === id ? null : id))
-    inspectCategory(id, skillCategories.length)
-  }
+  const toggle = (id: string) => setOpen((o) => (o === id ? null : id))
 
   return (
-    <section id="arsenal" ref={root} className="sec sec--aside skills" aria-labelledby="arsenal-title">
-      <h2 id="arsenal-title" className="sr-only">
-        Arsenal — mes compétences
+    <section id="competences" ref={root} className="sec sec--aside skills" aria-labelledby="competences-title">
+      <h2 id="competences-title" className="sr-only">
+        Compétences
       </h2>
-      <p className="skills__hint micro">
-        {skillsSection.hint} · {progress.inspected.length}/{skillCategories.length} inspectées
-      </p>
+      <p className="skills__hint micro">{skillsSection.hint}</p>
       <ol className="skills__list">
         {skillCategories.map((c, i) => (
           <li key={c.id} className="skill" style={{ '--i': i } as React.CSSProperties}>
             <button
               type="button"
-              className={`skill__head${open === c.id ? ' is-open' : ''}${progress.inspected.includes(c.id) ? ' is-seen' : ''}`}
+              className={`skill__head${open === c.id ? ' is-open' : ''}`}
               aria-expanded={open === c.id}
               aria-controls={`skill-${c.id}`}
               onClick={() => toggle(c.id)}
@@ -94,16 +87,13 @@ export function Skills() {
             )}
             {open === c.id && (
               <div id={`skill-${c.id}`} className="skill__detail">
-                <p className="skill__summary">
-                  <span className="poster gold">{c.slot}</span> — {c.summary}
-                </p>
+                <p className="skill__summary">{c.summary}</p>
                 <ul>
                   {c.skills.map((s) => (
                     <li key={s.name}>
                       <span className="skill__glyph poster">{s.glyph}</span>
                       <div>
                         <h3 className="poster">{s.name}</h3>
-                        <p className="skill__kind hand">{s.kind}</p>
                         <p>{s.description}</p>
                       </div>
                     </li>

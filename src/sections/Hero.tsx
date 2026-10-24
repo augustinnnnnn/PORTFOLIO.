@@ -1,7 +1,5 @@
 import { useEffect, useRef } from 'react'
 import { hero, profile } from '../content/site'
-import { useGame } from '../game/GameContext'
-import { Rune } from '../components/Glyphs'
 import { Brush, HandArrow } from '../components/Hand'
 import { NameMark } from '../components/NameMark'
 import { Socials } from '../components/Sidebar'
@@ -10,14 +8,13 @@ import './Hero.css'
 
 export function Hero({ ready }: { ready: boolean }) {
   const root = useRef<HTMLElement>(null)
-  const { discover, isFound } = useGame()
-  const runeFound = isFound('hero-rune')
 
   // État initial (avant la fin du chargement)
   useEffect(() => {
     const el = root.current
     if (!el || prefersReducedMotion()) return
     const ctx = gsap.context(() => {
+      gsap.set('.hero__backdrop', { opacity: 1, scale: 1.08 })
       gsap.set('.hero__orb', { scale: 0.6, opacity: 0 })
       gsap.set('.hero__note, .hero__scroll, .hero__socials', { opacity: 0, y: 16 })
       gsap.set('.hero__brush', { clipPath: 'inset(0 100% 0 0)' })
@@ -33,11 +30,12 @@ export function Hero({ ready }: { ready: boolean }) {
     if (!el || !ready || prefersReducedMotion()) return
     const tl = gsap
       .timeline({ defaults: { ease: 'expo.out' } })
-      .to('.hero__orb', { scale: 1, opacity: 1, duration: 2.2 })
-      .to(['.hero__name', '[data-flyer="name"] .namemark'], { opacity: 1, y: 0, duration: 1.4 }, 0.2)
-      .to(['.hero__portrait', '[data-flyer="portrait"]'], { clipPath: 'inset(0% 0 0 0)', duration: 1.4, ease: 'expo.inOut' }, 0.35)
-      .to('.hero__brush', { clipPath: 'inset(0 0% 0 0)', duration: 1.2, ease: 'power3.inOut' }, 0.8)
-      .to('.hero__note, .hero__scroll, .hero__socials', { opacity: 1, y: 0, duration: 1, stagger: 0.08 }, 1)
+      .to('.hero__backdrop', { opacity: 0, scale: 1, duration: 2.2, ease: 'power2.inOut' }, 0.4)
+      .to('.hero__orb', { scale: 1, opacity: 1, duration: 2.2 }, 1.2)
+      .to(['.hero__name', '[data-flyer="name"] .namemark'], { opacity: 1, y: 0, duration: 1.4 }, 0)
+      .to(['.hero__portrait', '[data-flyer="portrait"]'], { clipPath: 'inset(0% 0 0 0)', duration: 1.4, ease: 'expo.inOut' }, 0.1)
+      .to('.hero__brush', { clipPath: 'inset(0 0% 0 0)', duration: 1.2, ease: 'power3.inOut' }, 0.5)
+      .to('.hero__note, .hero__scroll, .hero__socials', { opacity: 1, y: 0, duration: 1, stagger: 0.08 }, 0.7)
     return () => {
       tl.progress(1).kill()
     }
@@ -60,17 +58,12 @@ export function Hero({ ready }: { ready: boolean }) {
 
   return (
     <section id="accueil" ref={root} className="hero" aria-label="Accueil">
-      <div className="hero__orb" aria-hidden={runeFound}>
+      <div className="hero__backdrop" aria-hidden="true">
+        <img src={hero.backdrop} alt="" />
+      </div>
+      <div className="hero__orb" aria-hidden="true">
         <div className="hero__orb-inner" data-speed="0.7">
-          <img src="/images/relic-gate.webp" alt="" />
-          <button
-            type="button"
-            className={`hero__rune${runeFound ? ' is-found' : ''}`}
-            onClick={() => discover('hero-rune')}
-            aria-label={runeFound ? 'Rune de l’aube (découverte)' : 'Un symbole scintille dans la lumière'}
-          >
-            <Rune index={0} />
-          </button>
+          <img src={hero.backdrop} alt="" />
         </div>
       </div>
 
@@ -86,7 +79,7 @@ export function Hero({ ready }: { ready: boolean }) {
           </figure>
         </div>
         <div className="hero__bottom">
-          <a href="#origine" className="hero__scroll hand">
+          <a href="#profil" className="hero__scroll hand">
             <span aria-hidden="true">↓</span> {hero.scroll}
           </a>
           <Brush className="hero__brush" />

@@ -61,11 +61,6 @@
 .skill__head.is-open .skill__plus::after {
   transform: rotate(0deg);
 }
-.skill__head.is-seen .skill__num::after {
-  content: ' ◆';
-  font-size: 0.5em;
-  vertical-align: middle;
-}
 .skill__keys {
   margin: 1rem 0 0 calc(clamp(1.2rem, 0.9rem + 1vw, 2rem) * 0.9 + 0.7rem);
   font-size: 0.8rem;
@@ -119,6 +114,7 @@
 }
 .skill__detail h3 {
   font-size: 1.3rem;
+  margin-bottom: 0.3rem;
 }
 .skill__kind {
   margin: 0.15rem 0 0.4rem;

@@ -4,7 +4,7 @@ import { projects } from '../content/projects'
 import { scrollToTarget } from '../lib/scroll'
 import { Icon } from './Glyphs'
 import { Brush } from './Hand'
-import { FragmentBadge, NavLinks, Tagline } from './TopBar'
+import { NavLinks, Tagline } from './TopBar'
 import { NameMark } from './NameMark'
 import './Sidebar.css'
 
@@ -87,7 +87,6 @@ export function Sidebar({ active, mode }: { active: string; mode: 'portrait' | '
         </p>
         <nav aria-label="Sections (barre latérale)" className="sidebar__nav">
           <NavLinks active={active} onGo={(id) => scrollToTarget(`#${id}`)} className="navlinks--grid" />
-          <FragmentBadge />
         </nav>
       </div>
       <div className="sidebar__media" data-side-fade>
@@ -103,7 +102,7 @@ export function Sidebar({ active, mode }: { active: string; mode: 'portrait' | '
           ))}
         </ul>
         <span className="sidebar__vtag poster">
-          {mode === 'works' ? 'Œuvres / en forge' : profile.portrait.tag}
+          {mode === 'works' ? 'Projets / sélection' : profile.portrait.tag}
         </span>
       </div>
       <div data-side-fade>

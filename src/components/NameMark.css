@@ -1,33 +1,13 @@
 .namemark {
-  display: inline-block;
-  --hold: 0;
+  display: inline-flex;
+  gap: 0.22em;
   margin: 0;
   line-height: 0.86;
   white-space: nowrap;
 }
-.namemark__btn {
-  display: inline-flex;
-  gap: 0.22em;
-  font: inherit;
-  letter-spacing: inherit;
-  text-transform: inherit;
-  user-select: none;
-  -webkit-user-select: none;
-  touch-action: manipulation;
-  cursor: default;
-}
 .namemark__first {
-  background: linear-gradient(90deg, var(--gold) calc(var(--hold) * 100%), var(--bone) calc(var(--hold) * 100%));
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
+  color: var(--bone);
   text-shadow: 0 0 40px rgba(236, 229, 214, 0.12);
-}
-.namemark.is-blessed .namemark__first,
-:root[data-restored] .namemark__first {
-  background: linear-gradient(180deg, #ffe3a6, var(--gold));
-  -webkit-background-clip: text;
-  background-clip: text;
 }
 .namemark__last {
   color: var(--gold);
@@ -44,7 +24,6 @@
   content: attr(data-text);
   position: absolute;
   inset: 0;
-  -webkit-text-fill-color: currentColor;
   pointer-events: none;
   opacity: 0;
 }

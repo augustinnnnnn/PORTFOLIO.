@@ -49,28 +49,6 @@
   user-select: none;
   pointer-events: none;
 }
-.contact__tile--secret {
-  display: grid;
-  place-items: center;
-  color: var(--gold-bright);
-  background: radial-gradient(circle, rgba(217, 169, 79, 0.35), #15110b 70%);
-  border-color: rgba(217, 169, 79, 0.6);
-  animation: secret-pulse 3s ease-in-out infinite;
-}
-.contact__tile--secret svg {
-  width: 40%;
-  height: 40%;
-  filter: drop-shadow(0 0 10px rgba(240, 201, 122, 0.9));
-}
-.contact__tile--secret.is-found {
-  animation: none;
-  box-shadow: 0 0 40px rgba(240, 201, 122, 0.5);
-}
-@keyframes secret-pulse {
-  50% {
-    box-shadow: 0 0 40px rgba(240, 201, 122, 0.45);
-  }
-}
 .contact__shade {
   position: absolute;
   inset: 0;
@@ -135,19 +113,6 @@
   border-top: 1px solid var(--line);
   font-size: 0.78rem;
   color: var(--stone);
-}
-.footer__actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1.4rem;
-}
-.footer__actions button {
-  color: var(--bone-dim);
-  border-bottom: 1px solid transparent;
-}
-.footer__actions button:hover {
-  color: var(--gold);
-  border-color: currentColor;
 }
 @media (max-width: 1099px) {
   .contact__grid {

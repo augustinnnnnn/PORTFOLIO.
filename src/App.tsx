@@ -1,6 +1,4 @@
 import { useCallback, useEffect, useLayoutEffect, useState } from 'react'
-import { GameProvider, useGame } from './game/GameContext'
-import { Codex, Finale, FragmentToast } from './game/GameUI'
 import { Loader } from './components/Loader'
 import { Chrome } from './components/Chrome'
 import { TopBar } from './components/TopBar'
@@ -11,7 +9,7 @@ import { Intro } from './sections/Intro'
 import { Skills } from './sections/Skills'
 import { Works, useProjectPanel } from './sections/Works'
 import { Showcase } from './sections/Showcase'
-import { Fragments } from './sections/Fragments'
+import { Approach } from './sections/Approach'
 import { Contact } from './sections/Contact'
 import { initSmoothScroll } from './lib/scroll'
 import { useFlight } from './lib/useFlight'
@@ -19,11 +17,11 @@ import { ScrollTrigger } from './lib/motion'
 
 const SECTIONS = [
   { id: 'accueil', label: 'Accueil', nav: '' },
-  { id: 'origine', label: 'Origine', nav: 'origine' },
-  { id: 'arsenal', label: 'Arsenal', nav: 'arsenal' },
-  { id: 'oeuvres', label: 'Œuvres', nav: 'oeuvres' },
-  { id: 'vitrine', label: 'Vitrine', nav: 'oeuvres' },
-  { id: 'fragments', label: 'Fragments', nav: 'fragments' },
+  { id: 'profil', label: 'Profil', nav: 'profil' },
+  { id: 'competences', label: 'Compétences', nav: 'competences' },
+  { id: 'projets', label: 'Projets', nav: 'projets' },
+  { id: 'vitrine', label: 'Projet phare', nav: 'projets' },
+  { id: 'approche', label: 'Approche', nav: 'approche' },
   { id: 'contact', label: 'Contact', nav: 'contact' },
 ]
 
@@ -38,7 +36,6 @@ function SmoothInit() {
 function Experience() {
   const [ready, setReady] = useState(false)
   const [active, setActive] = useState(SECTIONS[0])
-  const { visit } = useGame()
   const { openProject, panel } = useProjectPanel()
   const onLoaded = useCallback(() => setReady(true), [])
 
@@ -59,22 +56,18 @@ function Experience() {
         start: 'top 55%',
         end: 'bottom 55%',
         onToggle: (self) => {
-          if (self.isActive) {
-            setActive(s)
-            visit(s.id)
-          }
+          if (self.isActive) setActive(s)
         },
       }),
     )
-    visit('accueil')
     return () => triggers.forEach((t) => t.kill())
-  }, [visit])
+  }, [])
 
-  const mode = active.id === 'oeuvres' || active.id === 'vitrine' ? 'works' : 'portrait'
+  const mode = active.id === 'projets' || active.id === 'vitrine' ? 'works' : 'portrait'
 
   return (
     <>
-      <a href="#origine" className="skip-link">
+      <a href="#profil" className="skip-link">
         Aller au contenu
       </a>
       <Loader onDone={onLoaded} />
@@ -91,24 +84,17 @@ function Experience() {
             <Skills />
             <Works onOpen={openProject} />
             <Showcase onOpen={openProject} />
-            <Fragments />
+            <Approach />
             <Contact />
           </main>
         </div>
       </div>
       {panel}
-      <FragmentToast />
-      <Codex />
-      <Finale />
       <div className="grain" aria-hidden="true" />
     </>
   )
 }
 
 export function App() {
-  return (
-    <GameProvider>
-      <Experience />
-    </GameProvider>
-  )
+  return <Experience />
 }

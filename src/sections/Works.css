@@ -115,6 +115,8 @@
 }
 .works__outro .line {
   overflow: hidden;
+  padding-top: 0.16em;
+  margin-top: -0.16em;
 }
 .works__outro .wd,
 .works__outro .ch {

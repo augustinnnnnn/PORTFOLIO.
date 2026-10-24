@@ -1,6 +1,6 @@
 /**
  * ============================================================
- *  ŒUVRES FORGÉES — tes projets.
+ *  PROJETS — tes réalisations.
  * ============================================================
  *  Pour ajouter un projet : copie un bloc, change les valeurs,
  *  puis place ton image de couverture dans /public/images/projets/.
@@ -47,7 +47,7 @@ const demoProcess = [
 export const projects: Project[] = [
   {
     id: 'projet-1',
-    title: 'Les Crêtes',
+    title: 'Atlas',
     category: 'Exemple · Site vitrine',
     year: '20XX',
     cover: '/images/relic-peaks.webp',
@@ -71,7 +71,7 @@ export const projects: Project[] = [
   },
   {
     id: 'projet-2',
-    title: 'Le Monolithe',
+    title: 'Nova',
     category: 'Exemple · Identité visuelle',
     year: '20XX',
     cover: '/images/relic-monolith.webp',
@@ -87,7 +87,7 @@ export const projects: Project[] = [
   },
   {
     id: 'projet-3',
-    title: 'La Colonnade',
+    title: 'Prisme',
     category: 'Exemple · UX/UI',
     year: '20XX',
     cover: '/images/relic-colonnade.webp',
@@ -103,7 +103,7 @@ export const projects: Project[] = [
   },
   {
     id: 'projet-4',
-    title: 'La Grande Porte',
+    title: 'Écho',
     category: 'Exemple · Expérience interactive',
     year: '20XX',
     cover: '/images/relic-gate.webp',
@@ -119,7 +119,7 @@ export const projects: Project[] = [
   },
   {
     id: 'projet-5',
-    title: 'L’Arbre de lumière',
+    title: 'Lumen',
     category: 'Exemple · Motion design',
     year: '20XX',
     cover: '/images/relic-tree.webp',
@@ -135,7 +135,7 @@ export const projects: Project[] = [
   },
   {
     id: 'projet-6',
-    title: 'La Tour',
+    title: 'Orbite',
     category: 'Exemple · Projet personnel',
     year: '20XX',
     cover: '/images/relic-tower.webp',

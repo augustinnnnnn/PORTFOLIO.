@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react'
 import { navigation, profile } from '../content/site'
-import { useGame } from '../game/GameContext'
 import { scrollToTarget, setScrollLocked } from '../lib/scroll'
 import { CycleWords } from './CycleWords'
 import './TopBar.css'
@@ -36,15 +35,6 @@ export function NavLinks({ active, onGo, className }: { active: string; onGo: (i
   )
 }
 
-export function FragmentBadge({ className }: { className?: string }) {
-  const { progress, total, setCodexOpen } = useGame()
-  return (
-    <button type="button" className={`badge ${className ?? ''}`} onClick={() => setCodexOpen(true)} aria-label={`Codex : ${progress.found.length} fragments sur ${total}`}>
-      {progress.found.length}/{total}
-    </button>
-  )
-}
-
 /** Barre du haut : slogan à gauche, navigation à droite (menu plein écran sur mobile). */
 export function TopBar({ active }: { active: string }) {
   const [open, setOpen] = useState(false)
@@ -73,7 +63,6 @@ export function TopBar({ active }: { active: string }) {
       </div>
       <nav className="topbar__nav" aria-label="Sections" data-fly-fade>
         <NavLinks active={active} onGo={go} />
-        <FragmentBadge />
       </nav>
       <button type="button" className="topbar__burger" aria-expanded={open} aria-controls="mobile-menu" onClick={() => setOpen((o) => !o)}>
         <span className="sr-only">{open ? 'Fermer le menu' : 'Ouvrir le menu'}</span>
@@ -82,7 +71,6 @@ export function TopBar({ active }: { active: string }) {
       </button>
       <div id="mobile-menu" className="topbar__menu" hidden={!open}>
         <NavLinks active={active} onGo={go} className="navlinks--big" />
-        <FragmentBadge className="badge--big" />
       </div>
     </header>
   )

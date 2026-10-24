@@ -1,9 +1,7 @@
 import { useEffect, useMemo, useRef } from 'react'
-import { contact } from '../content/site'
+import { contact, profile } from '../content/site'
 import { projects } from '../content/projects'
-import { useGame } from '../game/GameContext'
 import { Rich } from '../components/Rich'
-import { Rune } from '../components/Glyphs'
 import { Brush, HandArrow } from '../components/Hand'
 import { CopyEmail, Socials } from '../components/Sidebar'
 import { Draggable, ScrollTrigger, gsap, prefersReducedMotion } from '../lib/motion'
@@ -13,21 +11,17 @@ import './Contact.css'
 
 const COLS = 9
 const ROWS = 6
-/** Position de la tuile secrète (en bas à droite, souvent hors champ). */
-const SECRET = { col: 8, row: 5 }
 
 export function Contact() {
   const root = useRef<HTMLElement>(null)
   const wall = useRef<HTMLDivElement>(null)
-  const { discover, isFound, setCodexOpen, reset, progress, total } = useGame()
-  const found = isFound('last-grace')
 
   const tiles = useMemo(() => {
     const imgs = projects.map((p) => p.coverSmall ?? p.cover)
     return Array.from({ length: COLS * ROWS }, (_, i) => {
       const col = i % COLS
       const row = Math.floor(i / COLS)
-      return { i, col, row, src: imgs[(i * 5 + row) % imgs.length], secret: col === SECRET.col && row === SECRET.row }
+      return { i, src: imgs[(col * 5 + row * 2) % imgs.length] }
     })
   }, [])
 
@@ -91,23 +85,11 @@ export function Contact() {
       <div className="contact__wall">
         <div className="contact__tilt">
           <div ref={wall} className="contact__grid" style={{ '--cols': COLS } as React.CSSProperties}>
-            {tiles.map((t) =>
-              t.secret ? (
-                <button
-                  key={t.i}
-                  type="button"
-                  className={`contact__tile contact__tile--secret${found ? ' is-found' : ''}`}
-                  onClick={() => discover('last-grace')}
-                  aria-label={found ? 'Dernière grâce (découverte)' : 'Une tuile brille plus que les autres'}
-                >
-                  <Rune index={7} />
-                </button>
-              ) : (
-                <div key={t.i} className="contact__tile" aria-hidden="true">
-                  <img src={t.src} alt="" loading="lazy" draggable={false} />
-                </div>
-              ),
-            )}
+            {tiles.map((t) => (
+              <div key={t.i} className="contact__tile" aria-hidden="true">
+                <img src={t.src} alt="" loading="lazy" draggable={false} />
+              </div>
+            ))}
           </div>
         </div>
         <div className="contact__shade" aria-hidden="true" />
@@ -132,19 +114,7 @@ export function Contact() {
         <p>
           © {new Date().getFullYear()} — {contact.footer}
         </p>
-        <div className="footer__actions">
-          <button type="button" onClick={() => setCodexOpen(true)}>
-            Codex · {progress.found.length}/{total}
-          </button>
-          <button
-            type="button"
-            onClick={() => {
-              if (window.confirm('Effacer toutes les découvertes ?')) reset()
-            }}
-          >
-            Réinitialiser la progression
-          </button>
-        </div>
+        <p>{profile.role}</p>
       </footer>
     </section>
   )

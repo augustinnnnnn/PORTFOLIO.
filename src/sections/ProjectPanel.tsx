@@ -101,7 +101,7 @@ export function ProjectPanel({ project, originRect, onClose, onNavigate }: Props
         <div className="panel__cover-shade" />
         <div className="panel__head panel__wrap">
           <p className="micro gold panel__fade">
-            Chapitre {index + 1} · {project.year}
+            Projet {String(index + 1).padStart(2, "0")} · {project.year}
           </p>
           <h2 id="panel-title" className="poster panel__title">
             <span className="line-mask">
@@ -170,7 +170,7 @@ export function ProjectPanel({ project, originRect, onClose, onNavigate }: Props
       </div>
 
       <button type="button" className="panel__next" onClick={() => onNavigate(next)} data-cursor="Suivant">
-        <span className="micro">Œuvre suivante</span>
+        <span className="micro">Projet suivant</span>
         <span className="poster panel__next-title">
           {next.title} <ArrowGlyph />
         </span>
